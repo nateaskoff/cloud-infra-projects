@@ -22,6 +22,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup cicd
-        uses: ./.github/workflows/reusable_workflows/setup_ci_cd.yml
+        uses: ./.github/workflows/reusable_workflows/setup_ci_cd
         with:
           cloud_providers: 'Az, Gc, Aw'
