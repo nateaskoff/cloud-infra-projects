@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Setup cicd
-        uses: ./.github/workflows/reusable_workflows/setup_ci_cd
+      - name: Setup CI/CD
+        uses: nateaskoff/cloud-infra-projects/.github/workflows/reusable_workflows/setup_ci_cd.yml@main
         with:
           cloud_providers: 'Az, Gc, Aw'

@@ -38,7 +38,6 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
-        run: echo "Environment variables set."
       - name: Run CI/CD Setup Script
         run: python3 .ci_cd/scripts/setup_ci_cd.py ${{ inputs.cloud_providers }}
         env:
