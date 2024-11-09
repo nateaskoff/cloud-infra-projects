@@ -1,0 +1,27 @@
+name: Test Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+  AZURE_ORG: ${{ secrets.AZURE_ORG }}
+  AZURE_PROJECT: ${{ secrets.AZURE_PROJECT }}
+  GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+  GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
+  GCP_ZONE: ${{ secrets.GCP_ZONE }}
+  AWS_CREDENTIALS: ${{ secrets.AWS_CREDENTIALS }}
+  AWS_REGION: "us-east-1"
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup cicd
+        uses: ./.github/workflows/reusable_workflows/setup_ci_cd.yml
+        with:
+          cloud_providers: 'Az, Gc, Aw'
