@@ -26,6 +26,6 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: '3.12.x'
       - name: Setup CI/CD
         run: python3 .ci_cd/scripts/setup_ci_cd.py Az,Gc,Aw
