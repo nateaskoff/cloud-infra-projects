@@ -23,7 +23,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Setup CI/CD
-        uses: nateaskoff/cloud-infra-projects/.github/workflows/reusable_workflows/setup_ci_cd.yml@main
+      - name: Setup Python
+        uses: actions/setup-python@v2
         with:
-          cloud_providers: 'Az, Gc, Aw'
+          python-version: '3.x'
+      - name: Setup CI/CD
+        run: python3 .ci_cd/scripts/setup_ci_cd.py Az,Gc,Aw
