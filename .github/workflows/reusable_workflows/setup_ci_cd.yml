@@ -36,7 +36,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -59,3 +59,4 @@ jobs:
 
       - name: Run CI/CD Setup Script
         run: python scripts/setup_ci_cd.py "${{ inputs.cloud_providers }}"
+w
