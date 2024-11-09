@@ -33,16 +33,11 @@ on:
 jobs:
   setup-ci-cd:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
-
       - name: Set Environment Variables
         env:
           AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
@@ -56,7 +51,5 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: echo "Environment variables set."
-
       - name: Run CI/CD Setup Script
-        run: python scripts/setup_ci_cd.py "${{ inputs.cloud_providers }}"
-w
+        run: python3 .ci_cd/scripts/setup_ci_cd.py ${{ inputs.cloud_providers }}
