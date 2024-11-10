@@ -14,6 +14,7 @@ permissions:
   contents: read
 
 env:
+  app_env: "dev"
   repo_path: "battle_of_the_dragons_revived"
 
 jobs:
@@ -23,6 +24,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Setup OIDC AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}
+          role-session-name: GitHubActions-botdr-${{ github.sha }}
+          aws-region: us-east-1
       - name: Set Up Python 3.12
         uses: actions/setup-python@v4
         with:
@@ -31,3 +38,24 @@ jobs:
         run: pip install checkov
       - name: Run Checkov
         run: checkov -d ${{ env.repo_path }}
+      - name: Set Up Infracost
+        uses: infracost/actions/setup@v3
+        with:
+          api_key: ${{ secrets.INFRACOST_API_TOKEN }}
+      - name: Run Infracost
+        run: infracost breakdown --path ${{ env.repo_path }}
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16.x"
+      - name: Install Yarn
+        run: npm install -g yarn
+      - name: Build Env Bundle
+        run: yarn install
+        working-directory: ${{ env.repo_path }}
+      - name: Run Unit Tests
+        run: yarn test
+        working-directory: ${{ env.repo_path }}
+      - name: Run Yarn Build
+        run: yarn build
+        working-directory: ${{ env.repo_path }}
