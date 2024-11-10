@@ -14,14 +14,17 @@ permissions:
   contents: read
 
 env:
-  app_env: "dev"
   repo_path: "battle_of_the_dragons_revived"
+  node_version: "20.x"
+  python_version: "3.12"
+  terraform_version: "1.9.8"
 
 jobs:
   unit-tests:
     runs-on: ubuntu-latest
     env:
       app_env: "dev"
+      TF_TOKEN: ${{ secrets.TF_API_TOKEN }}
       TF_WORKSPACE: "dev-botdr"
     steps:
       - name: Checkout code
@@ -38,10 +41,10 @@ jobs:
         run: flyctl orgs list
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_IO_API_TOKEN }}
-      - name: Set Up Python 3.12
+      - name: Set Up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.12
+          python-version: ${{ env.python_version }}
       - name: Set Up Checkov
         run: pip install checkov
       - name: Run Checkov
@@ -55,7 +58,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20.x"
+          node-version: ${{ env.node_version }}
       - name: Install Yarn
         run: npm install -g yarn
       - name: Build Env Bundle
@@ -70,7 +73,7 @@ jobs:
       - name: Set Up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.9.8
+          terraform_version: ${{ env.terraform_version }}
       - name: Terraform Init
         run: terraform init
         working-directory: "${{ env.repo_path }}/infra"
@@ -80,7 +83,7 @@ jobs:
       - name: Create Terraform Workspace
         uses: dflook/terraform-new-workspace@v1.44.0
         with:
-          workspace: "${{ env.app_env }}-botdr"
+          workspace: ${{ env.TF_WORKSPACE }}
           path: "${{ env.repo_path }}/infra"
           backend_config: token=${{ secrets.TF_API_TOKEN }}
       - name: Terraform Plan
@@ -94,6 +97,7 @@ jobs:
       name: dev
     env:
       app_env: "dev"
+      TF_TOKEN: ${{ secrets.TF_API_TOKEN }}
       TF_WORKSPACE: "dev-botdr"
     steps:
       - name: Checkout code
@@ -110,14 +114,14 @@ jobs:
         run: flyctl orgs list
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_IO_API_TOKEN }}
-      - name: Set Up Python 3.12
+      - name: Set Up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.12
+          python-version: ${{ env.python_version }}
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20.x"
+          node-version: ${{ env.node_version }}
       - name: Install Yarn
         run: npm install -g yarn
       - name: Build Env Bundle
@@ -129,7 +133,7 @@ jobs:
       - name: Set Up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.9.8
+          terraform_version: ${{ env.terraform_version }}
       - name: Terraform Init
         run: terraform init
         working-directory: "${{ env.repo_path }}/infra"
