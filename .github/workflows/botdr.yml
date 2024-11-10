@@ -53,9 +53,9 @@ jobs:
       - name: Run Infracost
         run: infracost breakdown --path ${{ env.repo_path }}
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: "16.x"
+          node-version: "20.x"
       - name: Install Yarn
         run: npm install -g yarn
       - name: Build Env Bundle
@@ -115,9 +115,9 @@ jobs:
         with:
           python-version: 3.12
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: "16.x"
+          node-version: "20.x"
       - name: Install Yarn
         run: npm install -g yarn
       - name: Build Env Bundle
