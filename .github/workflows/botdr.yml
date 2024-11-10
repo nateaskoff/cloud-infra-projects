@@ -42,7 +42,7 @@ jobs:
       - name: Set Up Checkov
         run: pip install checkov
       - name: Run Checkov
-        run: checkov -d ${{ env.repo_path }}
+        run: checkov -d ${{ env.repo_path }} --quiet
       - name: Set Up Infracost
         uses: infracost/actions/setup@v3
         with:
