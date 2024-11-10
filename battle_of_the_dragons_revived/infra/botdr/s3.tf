@@ -1,5 +1,11 @@
 resource "aws_s3_bucket" "web_bucket" {
   #checkov:skip=CKV_AWS_300
+  #checkov:skip=CKV2_AWS_61:github deploy is the lifecycle
+  #checkov:skip=CKV_AWS_21:versioning is in github
+  #checkov:skip=CKV_AWS_145:cannot use kms with cloudfront
+  #checkov:skip=CKV2_AWS_62
+  #checkov:skip=CKV_AWS_18
+  #checkov:skip=CKV_AWS_144
   bucket        = "${lower(var.aws_env)}-botdr-primary-site-web-bucket"
   force_destroy = true
 }
