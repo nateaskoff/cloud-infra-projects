@@ -29,6 +29,7 @@ No modules.
 | [aws_cloudfront_response_headers_policy.default](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/resources/cloudfront_response_headers_policy) | resource |
 | [aws_route53_record.botdr_app](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/resources/route53_record) | resource |
 | [aws_route53_record.botdr_web](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/resources/route53_record) | resource |
+| [aws_route53_record.web_cert_val_record](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/resources/route53_record) | resource |
 | [aws_route53_zone.botdr_zone](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/data-sources/route53_zone) | data source |
 
 ## Inputs
