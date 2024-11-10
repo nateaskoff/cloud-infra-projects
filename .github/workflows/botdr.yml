@@ -54,7 +54,7 @@ jobs:
         run: yarn install
         working-directory: "${{ env.repo_path }}/web"
       - name: Run Unit Tests
-        run: yarn test
+        run: yarn test --detectOpenHandles
         working-directory: "${{ env.repo_path }}/web"
       - name: Run Yarn Build
         run: yarn build
