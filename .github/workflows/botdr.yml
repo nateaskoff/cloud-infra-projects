@@ -59,3 +59,10 @@ jobs:
       - name: Run Yarn Build
         run: yarn build
         working-directory: "${{ env.repo_path }}/web"
+      - name: Set Up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.8
+      - name: Terraform Init
+        run: terraform init
+        working-directory: "${{ env.repo_path }}/infra"
