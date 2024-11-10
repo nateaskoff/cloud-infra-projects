@@ -6,7 +6,7 @@ resource "aws_s3_bucket" "web_bucket" {
   #checkov:skip=CKV2_AWS_62
   #checkov:skip=CKV_AWS_18
   #checkov:skip=CKV_AWS_144
-  bucket        = "${lower(var.aws_env)}-botdr-primary-site-web-bucket"
+  bucket        = "${lower(var.env)}-botdr-primary-site-web-bucket"
   force_destroy = true
 }
 
