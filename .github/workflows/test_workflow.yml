@@ -39,4 +39,9 @@ jobs:
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
           audience: ${{ secrets.GCP_AUDIENCE }}
-  
+      - name: Set Up GCP Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          version: 'latest'
+      - name: Test GCP Connection
+        run: gcloud info
