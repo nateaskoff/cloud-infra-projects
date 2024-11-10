@@ -75,12 +75,11 @@ jobs:
         run: terraform validate
         working-directory: "${{ env.repo_path }}/infra"
       - name: Create Terraform Workspace
-        uses: terraform-actions/terraform-new-workspace@v1
+        uses: dflook/terraform-new-workspace@v1.44.0
         with:
-          organization: "cloud-infra-projects"
-          token: ${{ secrets.TF_API_TOKEN }}
           workspace: "${{ env.app_env }}-botdr"
-          working-directory: "${{ env.repo_path }}/infra"
+          path: "${{ env.repo_path }}/infra"
+          backend_config: token=${{ secrets.TF_API_TOKEN }}
 
   deploy:
     runs-on: ubuntu-latest
