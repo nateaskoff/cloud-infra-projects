@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       app_env: "dev"
-      TF_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      TFE_TOKEN: ${{ secrets.TF_API_TOKEN }}
       TF_WORKSPACE: "dev-botdr"
     steps:
       - name: Checkout code
@@ -97,7 +97,7 @@ jobs:
       name: dev
     env:
       app_env: "dev"
-      TF_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      TFE_TOKEN: ${{ secrets.TF_API_TOKEN }}
       TF_WORKSPACE: "dev-botdr"
     steps:
       - name: Checkout code
