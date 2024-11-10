@@ -1,6 +1,6 @@
 resource "aws_route53_record" "botdr_app" {
   #checkov:skip=CKV2_AWS_23:this is pointing to an external IP in fly.io
-  zone_id = data.botdr_zone.botdr.zone_id
+  zone_id = data.aws_route53_zone.botdr_zone.zone_id
   name    = "app-${var.env}.battleofthedragonsrevived.com"
   type    = "A"
   ttl     = "300"
@@ -10,13 +10,13 @@ resource "aws_route53_record" "botdr_app" {
 }
 
 resource "aws_route53_record" "botdr_web" {
-  zone_id = data.botdr_zone.botdr.zone_id
+  zone_id = data.aws_route53_zone.botdr_zone.zone_id
   name    = var.env == "dev" ? "web${var.env}.battleofthedragonsrevived.com" : "battleofthedragonsrevived.com"
   type    = "A"
 
   alias {
-    name                   = aws_cloudfront_distribution.cf_botdr_web.domain_name
-    zone_id                = aws_cloudfront_distribution.cf_botdr_web.hosted_zone_id
+    name                   = aws_cloudfront_distribution.cf_dist_botdr_web.domain_name
+    zone_id                = aws_cloudfront_distribution.cf_dist_botdr_web.hosted_zone_id
     evaluate_target_health = true
   }
 }
@@ -35,5 +35,5 @@ resource "aws_route53_record" "web_cert_val_record" {
   records         = [each.value.record]
   ttl             = 60
   type            = each.value.type
-  zone_id         = data.aws_route53_zone.r53_zone.zone_id
+  zone_id         = data.aws_route53_zone.botdr_zone.zone_id
 }
