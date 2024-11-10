@@ -5,17 +5,9 @@ on:
     branches:
       - main
 
-env:
-  AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
-  AZURE_ORG: ${{ secrets.AZURE_ORG }}
-  AZURE_PROJECT: ${{ secrets.AZURE_PROJECT }}
-  GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-  GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
-  GCP_ZONE: ${{ secrets.GCP_ZONE }}
-  AWS_CREDENTIALS: ${{ secrets.AWS_CREDENTIALS }}
-  AWS_REGION: "us-east-1"
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   test:
@@ -23,9 +15,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - name: Setup OIDC AWS
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          python-version: '3.12.x'
-      - name: Setup CI/CD
-        run: python3 .ci_cd/scripts/setup_ci_cd.py Az,Gc,Aw
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}
+          role-session-name: GitHubActions-${{ github.sha }}
+          aws-region: us-east-1
+      - name: Test AWS Connection
+        run: aws s3 ls
