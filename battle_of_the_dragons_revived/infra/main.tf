@@ -3,6 +3,7 @@ terraform {
 
   cloud {
     organization = "cloud-infra-projects"
+    hostname     = "app.terraform.io"
   }
 
   required_providers {
