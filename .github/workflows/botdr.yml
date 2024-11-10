@@ -74,6 +74,13 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
         working-directory: "${{ env.repo_path }}/infra"
+      - name: Create Terraform Workspace
+        uses: terraform-actions/terraform-new-workspace@v1
+        with:
+          organization: "cloud-infra-projects"
+          token: ${{ secrets.TF_API_TOKEN }}
+          workspace: "${{ env.app_env }}-botdr"
+          working-directory: "${{ env.repo_path }}/infra"
 
   deploy:
     runs-on: ubuntu-latest
@@ -120,13 +127,6 @@ jobs:
       - name: Terraform Init
         run: terraform init
         working-directory: "${{ env.repo_path }}/infra"
-      - name: Create Terraform Workspace
-        uses: terraform-actions/terraform-new-workspace@v1
-        with:
-          organization: "cloud-infra-projects"
-          token: ${{ secrets.TF_API_TOKEN }}
-          workspace: "${{ env.app_env }}-botdr"
-          working-directory: "${{ env.repo_path }}/infra"
       - name: Terraform Plan
         run: terraform plan
         working-directory: "${{ env.repo_path }}/infra"
