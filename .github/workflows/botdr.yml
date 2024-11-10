@@ -20,6 +20,9 @@ env:
 jobs:
   unit-tests:
     runs-on: ubuntu-latest
+    env:
+      app_env: "dev"
+      TF_WORKSPACE: "dev-botdr"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -80,6 +83,9 @@ jobs:
           workspace: "${{ env.app_env }}-botdr"
           path: "${{ env.repo_path }}/infra"
           backend_config: token=${{ secrets.TF_API_TOKEN }}
+      - name: Terraform Plan
+        run: terraform plan
+        working-directory: "${{ env.repo_path }}/infra"
 
   deploy:
     runs-on: ubuntu-latest
@@ -88,6 +94,7 @@ jobs:
       name: dev
     env:
       app_env: "dev"
+      TF_WORKSPACE: "dev-botdr"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -125,9 +132,6 @@ jobs:
           terraform_version: 1.9.8
       - name: Terraform Init
         run: terraform init
-        working-directory: "${{ env.repo_path }}/infra"
-      - name: Terraform Plan
-        run: terraform plan
         working-directory: "${{ env.repo_path }}/infra"
       - name: Terraform Apply
         run: terraform apply -auto-approve
