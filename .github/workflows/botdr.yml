@@ -41,7 +41,7 @@ jobs:
       - name: Set Up Infracost
         uses: infracost/actions/setup@v3
         with:
-          api_key: ${{ secrets.INFRACOST_API_TOKEN }}
+          api-key: ${{ secrets.INFRACOST_API_TOKEN }}
       - name: Run Infracost
         run: infracost breakdown --path ${{ env.repo_path }}
       - name: Install Node.js
