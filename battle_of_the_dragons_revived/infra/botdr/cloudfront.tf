@@ -29,10 +29,11 @@ resource "aws_cloudfront_distribution" "cf_dist_botdr_web" {
       }
     }
 
-    viewer_protocol_policy = "redirect-to-https"
-    min_ttl                = 0
-    default_ttl            = 300
-    max_ttl                = 3600
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.default.id
+    viewer_protocol_policy     = "redirect-to-https"
+    min_ttl                    = 0
+    default_ttl                = 300
+    max_ttl                    = 3600
   }
 
   price_class = "PriceClass_100"
