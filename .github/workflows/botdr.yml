@@ -203,6 +203,7 @@ jobs:
             -backend-config="bucket=${{ env.TF_STATE_BUCKET_NAME }}" \
             -backend-config="region=${{ env.TF_STATE_BUCKET_REGION }}" \
             -backend-config="key=${{ env.TF_STATE_BUCKET_KEY }}"
+        working-directory: "${{ env.repo_path }}/infra"
       - name: Terraform Apply
         run: terraform apply -auto-approve
         working-directory: "${{ env.repo_path }}/infra"
