@@ -179,9 +179,20 @@ jobs:
       - name: Run Yarn Build
         run: yarn build
         working-directory: "${{ env.repo_path }}/web"
-      - name: Install Dependencies
-        run: pip install -r requirements.txt
-        working-directory: "${{ env.repo_path }}/app"
+      - name: Set Up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.terraform_version }}
+      - name: Terraform Init
+        run: |
+          terraform init \
+            -backend-config="bucket=${{ env.TF_STATE_BUCKET_NAME }}" \
+            -backend-config="region=${{ env.TF_STATE_BUCKET_REGION }}" \
+            -backend-config="key=${{ env.TF_STATE_BUCKET_KEY }}"
+        working-directory: "${{ env.repo_path }}/infra"
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        working-directory: "${{ env.repo_path }}/infra"
       - name: Deploy Fly.io App
         run: |
           # Check if the app exists
@@ -215,17 +226,3 @@ jobs:
             --ha=false
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_IO_API_TOKEN }}
-      - name: Set Up Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: ${{ env.terraform_version }}
-      - name: Terraform Init
-        run: |
-          terraform init \
-            -backend-config="bucket=${{ env.TF_STATE_BUCKET_NAME }}" \
-            -backend-config="region=${{ env.TF_STATE_BUCKET_REGION }}" \
-            -backend-config="key=${{ env.TF_STATE_BUCKET_KEY }}"
-        working-directory: "${{ env.repo_path }}/infra"
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
-        working-directory: "${{ env.repo_path }}/infra"
