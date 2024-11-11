@@ -19,7 +19,7 @@ provider "aws" {
   assume_role_with_web_identity {
     role_arn                = "arn:aws:iam::${var.aws_account_id}:role/${var.assume_role_name}"
     session_name            = "GithubActions-botdr-${var.github_sha}"
-    web_identity_token_file = "/tmp/aws-oidc-credentials"
+    web_identity_token_file = "/tmp/web_identity_token_file"
   }
 }
 
