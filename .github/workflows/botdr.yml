@@ -82,7 +82,6 @@ jobs:
     env:
       TF_WORKSPACE: "dev-botdr"
       TF_VAR_env: "dev"
-      TF_TOKEN_app_terraform_io: ${{ secrets.TF_TOKEN }}
       TF_STATE_BUCKET_NAME: "cloud-infra-projects-tf-state"
       TF_STATE_BUCKET_REGION: "us-east-1"
       TF_STATE_BUCKET_KEY: "dev/botdr/terraform.tfstate"
@@ -126,7 +125,6 @@ jobs:
     env:
       TF_WORKSPACE: "dev-botdr"
       TF_VAR_env: "dev"
-      TF_TOKEN_app_terraform_io: ${{ secrets.TF_TOKEN }}
       TF_STATE_BUCKET_NAME: "cloud-infra-projects-tf-state"
       TF_STATE_BUCKET_REGION: "us-east-1"
       TF_STATE_BUCKET_KEY: "dev/botdr/terraform.tfstate"
