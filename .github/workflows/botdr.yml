@@ -95,7 +95,7 @@ jobs:
           aws-region: us-east-1
       - name: Get local system to find the aws credential file
         run: |
-          Get-ChildItem -Recurse | Where-Object { $_.Name -like "*credentials*" }
+          Get-ChildItem -Recurse
         shell: pwsh
       - name: Set Up Terraform
         uses: hashicorp/setup-terraform@v3
