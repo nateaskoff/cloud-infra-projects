@@ -103,77 +103,78 @@ jobs:
         run: terraform validate
         working-directory: "${{ env.repo_path }}/infra"
       - name: Terraform Plan
-        run: terraform plan -chdir="${{ env.repo_path }}/infra"
+        run: terraform plan
+        working-directory: "${{ env.repo_path }}/infra"
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs:
-      - fly-io-check
-      - security-analysis
-      - cost-estimation
-      - build-and-test-yarn
-      - terraform-plan
-    environment:
-      name: DEV
-    env:
-      TF_WORKSPACE: "dev-botdr"
-      TF_TOKEN_app_terraform_io: ${{ secrets.TF_TOKEN }}
-      AWS_S3_CF_BUCKET_ID: "dev-botdr-primary-site-web-bucket"
-      FLY_IO_API_TOKEN: ${{ secrets.FLY_IO_API_TOKEN }}
-      FLY_IO_APP_NAME: "dev-botdr"
-      FLY_IO_APP_REGION: "iad"
-      FLY_IO_ORG: "cloud-infra-projects"
-      FLY_IO_PORT: "5121"
-      FLY_IO_KILL_SIGNAL: "SIGTERM"
-      FLY_IO_KILL_TIMEOUT: "300"
-      FLY_IO_CPUS: "0.25"
-      FLY_IO_MEMORY: "128"
-      FLY_IO_DOCKERFILE_PATH: "Dockerfile"
-      FLY_IO_VOLUMES: "/nwn/data"
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Setup OIDC AWS
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}
-          role-session-name: GitHubActions-botdr-${{ github.sha }}
-          aws-region: us-east-1
-      - name: Set Up Fly.io CLI
-        uses: superfly/flyctl-actions/setup-flyctl@master
-      - name: Test Fly.io Connection
-        run: flyctl orgs list
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_IO_API_TOKEN }}
-      - name: Set Up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.python_version }}
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.node_version }}
-      - name: Install Yarn
-        run: npm install -g yarn
-      - name: Build Env Bundle
-        run: yarn install
-        working-directory: "${{ env.repo_path }}/web"
-      - name: Run Yarn Build
-        run: yarn build
-        working-directory: "${{ env.repo_path }}/web"
-      - name: Install Dependencies
-        run: pip install -r requirements.txt
-        working-directory: "${{ env.repo_path }}/app"
-      - name: Deploy Fly.io App
-        run: python3 fly.py
-        working-directory: "${{ env.repo_path }}/app"
-      - name: Set Up Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: ${{ env.terraform_version }}
-      - name: Terraform Init
-        run: terraform init
-        working-directory: "${{ env.repo_path }}/infra"
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
-        working-directory: "${{ env.repo_path }}/infra"
+  #deploy:
+  #  runs-on: ubuntu-latest
+  #  needs:
+  #    - fly-io-check
+  #    - security-analysis
+  #    - cost-estimation
+  #    - build-and-test-yarn
+  #    - terraform-plan
+  #  environment:
+  #    name: DEV
+  #  env:
+  #    TF_WORKSPACE: "dev-botdr"
+  #    TF_TOKEN_app_terraform_io: ${{ secrets.TF_TOKEN }}
+  #    AWS_S3_CF_BUCKET_ID: "dev-botdr-primary-site-web-bucket"
+  #    FLY_IO_API_TOKEN: ${{ secrets.FLY_IO_API_TOKEN }}
+  #    FLY_IO_APP_NAME: "dev-botdr"
+  #    FLY_IO_APP_REGION: "iad"
+  #    FLY_IO_ORG: "cloud-infra-projects"
+  #    FLY_IO_PORT: "5121"
+  #    FLY_IO_KILL_SIGNAL: "SIGTERM"
+  #    FLY_IO_KILL_TIMEOUT: "300"
+  #    FLY_IO_CPUS: "0.25"
+  #    FLY_IO_MEMORY: "128"
+  #    FLY_IO_DOCKERFILE_PATH: "Dockerfile"
+  #    FLY_IO_VOLUMES: "/nwn/data"
+  #  steps:
+  #    - name: Checkout code
+  #      uses: actions/checkout@v4
+  #    - name: Setup OIDC AWS
+  #      uses: aws-actions/configure-aws-credentials@v4
+  #      with:
+  #        role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}
+  #        role-session-name: GitHubActions-botdr-${{ github.sha }}
+  #        aws-region: us-east-1
+  #    - name: Set Up Fly.io CLI
+  #      uses: superfly/flyctl-actions/setup-flyctl@master
+  #    - name: Test Fly.io Connection
+  #      run: flyctl orgs list
+  #      env:
+  #        FLY_API_TOKEN: ${{ secrets.FLY_IO_API_TOKEN }}
+  #    - name: Set Up Python
+  #      uses: actions/setup-python@v5
+  #      with:
+  #        python-version: ${{ env.python_version }}
+  #    - name: Install Node.js
+  #      uses: actions/setup-node@v4
+  #      with:
+  #        node-version: ${{ env.node_version }}
+  #    - name: Install Yarn
+  #      run: npm install -g yarn
+  #    - name: Build Env Bundle
+  #      run: yarn install
+  #      working-directory: "${{ env.repo_path }}/web"
+  #    - name: Run Yarn Build
+  #      run: yarn build
+  #      working-directory: "${{ env.repo_path }}/web"
+  #    - name: Install Dependencies
+  #      run: pip install -r requirements.txt
+  #      working-directory: "${{ env.repo_path }}/app"
+  #    - name: Deploy Fly.io App
+  #      run: python3 fly.py
+  #      working-directory: "${{ env.repo_path }}/app"
+  #    - name: Set Up Terraform
+  #      uses: hashicorp/setup-terraform@v3
+  #      with:
+  #        terraform_version: ${{ env.terraform_version }}
+  #    - name: Terraform Init
+  #      run: terraform init
+  #      working-directory: "${{ env.repo_path }}/infra"
+  #    - name: Terraform Apply
+  #      run: terraform apply -auto-approve
+  #      working-directory: "${{ env.repo_path }}/infra"

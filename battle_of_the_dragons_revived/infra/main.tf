@@ -1,9 +1,8 @@
 terraform {
   required_version = "1.9.8"
 
-  cloud {
-    organization = "cloud-infra-projects"
-    hostname     = "app.terraform.io"
+  backend "local" {
+    path = "terraform.tfstate"
   }
 
   required_providers {
