@@ -1,11 +1,7 @@
 terraform {
   required_version = "1.9.8"
 
-  backend "s3" {
-    bucket = "cloud-infra-projects-tf-state"
-    key    = "${var.env}/botdr/terraform.tfstate"
-    region = "us-east-1"
-  }
+  backend "s3" {}
 
   required_providers {
     aws = {
