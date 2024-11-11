@@ -91,7 +91,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TF_WORKSPACE: "dev-botdr"
-      TF_TOKEN: ${{ secrets.TF_TOKEN }}
+      TF_TOKEN_app_terraform_io: ${{ secrets.TF_TOKEN }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
