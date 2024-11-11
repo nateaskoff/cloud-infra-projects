@@ -37,9 +37,6 @@ RUN mkdir -p ~/.local/share/Neverwinter\ Nights/modules/
 # copy supervisord.conf to default location
 COPY supervisord.conf /etc/supervisor/supervisord.conf
 
-# copy supervisor.sh to /nwserver
-COPY supervisor.sh /nwserver/supervisor.sh
-
 # copy nw_server.py to /nwserver
 COPY nw_server.py /nwserver/nw_server.py
 
