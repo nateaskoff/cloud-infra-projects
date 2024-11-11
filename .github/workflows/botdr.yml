@@ -81,18 +81,17 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TF_WORKSPACE: "dev-botdr"
+      TF_VAR_env: "dev"
       TF_TOKEN_app_terraform_io: ${{ secrets.TF_TOKEN }}
-      TF_VAR_aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
-      TF_VAR_assume_role_name: ${{ secrets.AWS_ROLE_NAME }}
-      TF_VAR_github_sha: ${{ github.sha }}
-      WEB_IDENTITY_TOKEN_FILE: "/tmp/web_identity_token_file"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Output Web Identity Token to Credential File
-        run: |
-          curl -s -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" | jq -r '.value' > $WEB_IDENTITY_TOKEN_FILE
-          ls -l $WEB_IDENTITY_TOKEN_FILE
+      - name: Setup OIDC AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}
+          role-session-name: GitHubActions-botdr-${{ github.sha }}
+          aws-region: us-east-1
       - name: Set Up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
