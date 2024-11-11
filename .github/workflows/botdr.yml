@@ -97,7 +97,9 @@ jobs:
           aws-region: us-east-1
           output-credentials: true
       - name: Create OIDC Token File
-        run: echo "${{ steps.aws-oidc.outputs.web_identity_token }}" > /github/workspace/.aws/oidc-token
+        run: |
+          mkdir -p /github/workspace/.aws
+          echo "${{ steps.aws-oidc.outputs.web_identity_token }}" > /github/workspace/.aws/oidc-token
         env:
           web_identity_token: ${{ steps.aws-oidc.outputs.web_identity_token }}
       - name: Set Up Terraform
