@@ -102,8 +102,6 @@ jobs:
       - name: Terraform Init
         run: terraform init
         working-directory: "${{ env.repo_path }}/infra"
-        env:
-          TF_VAR_web_identity_token: ${{ACTIONS_ID_TOKEN_REQUEST_TOKEN}}
       - name: Terraform Validate
         run: terraform validate
         working-directory: "${{ env.repo_path }}/infra"
