@@ -5,9 +5,9 @@ set -e
 
 # Ensure required environment variables are set
 : "${AWS_REGION:?Environment variable AWS_REGION is required}"
-: "${ROLE_ARN:?Environment variable ROLE_ARN is required}"
-: "${SESSION_NAME:?Environment variable SESSION_NAME is required}"
-: "${WEB_IDENTITY_TOKEN_URL:?Environment variable WEB_IDENTITY_TOKEN_URL is required}"
+: "${TF_VAR_assume_role_name:?Environment variable TF_VAR_assume_role_name is required}"
+: "${AWS_SESSION_NAME:?Environment variable AWS_SESSION_NAME is required}"
+: "${AWS_WEB_IDENTITY_TOKEN_URL:?Environment variable AWS_WEB_IDENTITY_TOKEN_URL is required}"
 
 # Get the Web Identity Token from GitHub Actions (already available in $GITHUB_TOKEN)
 # GitHub automatically injects the OIDC token as a web identity token for the actions.
@@ -21,8 +21,8 @@ fi
 
 # Assume role using AWS CLI and Web Identity Token
 CREDS_JSON=$(aws sts assume-role-with-web-identity \
-  --role-arn "$ROLE_ARN" \
-  --role-session-name "$SESSION_NAME" \
+  --role-arn "$TF_VAR_assume_role_name" \
+  --role-session-name "$AWS_SESSION_NAME" \
   --web-identity-token "$WEB_IDENTITY_TOKEN" \
   --duration-seconds 3600 \
   --region "$AWS_REGION" \

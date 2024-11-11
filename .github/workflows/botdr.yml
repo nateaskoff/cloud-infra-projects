@@ -81,6 +81,9 @@ jobs:
   terraform-plan:
     runs-on: ubuntu-latest
     env:
+      AWS_REGION: "us-east-1"
+      AWS_SESSION_NAME: "GitHubActions-botdr-${{ github.sha }}"
+      AWS_WEB_IDENTITY_TOKEN_URL: "https://token.actions.githubusercontent.com"
       TF_WORKSPACE: "dev-botdr"
       TF_TOKEN_app_terraform_io: ${{ secrets.TF_TOKEN }}
       TF_VAR_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
