@@ -82,6 +82,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       AWS_REGION: "us-east-1"
+      AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
       AWS_SESSION_NAME: "GitHubActions-botdr-${{ github.sha }}"
       AWS_WEB_IDENTITY_TOKEN_URL: "https://token.actions.githubusercontent.com"
       TF_WORKSPACE: "dev-botdr"
