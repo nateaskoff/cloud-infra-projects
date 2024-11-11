@@ -91,7 +91,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TF_WORKSPACE: "dev-botdr"
-      TFE_TOKEN_app_terraform_io: ${{ secrets.TF_CLOUD_TEAM_TOKEN }}
+      TF_TOKEN: ${{ secrets.TF_TOKEN }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -126,6 +126,9 @@ jobs:
       - terraform-plan
     environment:
       name: dev
+    env:
+      TF_WORKSPACE: "dev-botdr"
+      TF_TOKEN: ${{ secrets.TF_TOKEN }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
