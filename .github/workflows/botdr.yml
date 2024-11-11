@@ -195,7 +195,7 @@ jobs:
           flyctl deploy ${{ env.repo_path }}/app \
             --app ${{ env.FLY_IO_APP_NAME }} \
             --regions ${{ env.FLY_IO_APP_REGION }} \
-            --vm-cpus-kind ${{ env.FLY_IO_CPUS_KIND }} \
+            --vm-cpu-kind ${{ env.FLY_IO_CPUS_KIND }} \
             --vm-cpus ${{ env.FLY_IO_CPUS }} \
             --vm-memory ${{ env.FLY_IO_MEMORY }} \
             --dockerfile ${{ env.FLY_IO_DOCKERFILE_PATH }} \
