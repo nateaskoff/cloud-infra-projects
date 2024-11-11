@@ -43,7 +43,7 @@ jobs:
       - name: Set Up GCP Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
-          version: 'latest'
+          version: "latest"
       - name: Test GCP Connection
         run: gcloud info
       - name: Set Up Fly.io CLI

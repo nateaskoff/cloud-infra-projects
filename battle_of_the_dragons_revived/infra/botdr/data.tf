@@ -31,3 +31,27 @@ data "aws_iam_policy_document" "s3_web_bucket_policy" {
     }
   }
 }
+
+data "aws_iam_policy_document" "botdr_fly_io_user_policy_doc" {
+  statement {
+    actions = [
+      "kms:*"
+    ]
+
+    resources = [
+      aws_kms_key.botdr_key.arn
+    ]
+  }
+
+  statement {
+    actions = [
+      "s3:GetObject",
+      "s3:ListBucket"
+    ]
+
+    resources = [
+      aws_s3_bucket.mod_bucket.arn,
+      "${aws_s3_bucket.mod_bucket.arn}/*"
+    ]
+  }
+}
