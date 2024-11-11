@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       app_env: "dev"
-      TFE_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      TFE_TOKEN: ${{ secrets.TF_CLOUD_TEAM_TOKEN }}
       TF_WORKSPACE: "dev-botdr"
     steps:
       - name: Checkout code
@@ -85,7 +85,7 @@ jobs:
         with:
           workspace: ${{ env.TF_WORKSPACE }}
           path: "${{ env.repo_path }}/infra"
-          backend_config: token=${{ secrets.TF_API_TOKEN }}
+          backend_config: token=${{ secrets.TF_CLOUD_TEAM_TOKEN }}
       - name: Terraform Plan
         run: terraform plan
         working-directory: "${{ env.repo_path }}/infra"
@@ -97,7 +97,7 @@ jobs:
       name: dev
     env:
       app_env: "dev"
-      TFE_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      TFE_TOKEN: ${{ secrets.TF_CLOUD_TEAM_TOKEN }}
       TF_WORKSPACE: "dev-botdr"
     steps:
       - name: Checkout code
