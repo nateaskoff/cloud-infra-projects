@@ -111,7 +111,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs:
-      - aws-oidc-check
       - fly-io-check
       - security-analysis
       - cost-estimation
