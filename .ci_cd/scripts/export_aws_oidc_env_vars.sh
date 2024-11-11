@@ -5,6 +5,7 @@ set -e
 
 # Ensure required environment variables are set
 : "${AWS_REGION:?Environment variable AWS_REGION is required}"
+: "${AWS_ACCOUNT_ID:?Environment variable AWS_ACCOUNT_ID is required}"
 : "${TF_VAR_assume_role_name:?Environment variable TF_VAR_assume_role_name is required}"
 : "${AWS_SESSION_NAME:?Environment variable AWS_SESSION_NAME is required}"
 : "${AWS_WEB_IDENTITY_TOKEN_URL:?Environment variable AWS_WEB_IDENTITY_TOKEN_URL is required}"
@@ -20,7 +21,7 @@ fi
 
 # Assume role using AWS CLI and Web Identity Token
 CREDS_JSON=$(aws sts assume-role-with-web-identity \
-  --role-arn "$TF_VAR_assume_role_name" \
+  --role-arn "arn:aws:iam::$AWS_ACCOUNT_ID:role/$TF_VAR_assume_role_name" \
   --role-session-name "$AWS_SESSION_NAME" \
   --web-identity-token "$WEB_IDENTITY_TOKEN" \
   --duration-seconds 3600 \
