@@ -3,10 +3,11 @@ FROM ubuntu:22.04
 
 # Install dependencies
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y libc6-i386 libstdc++6-i386-cross wget unzip supervisor python3
+RUN apt-get install -y libc6-i386 libstdc++6-i386-cross wget unzip supervisor python3 python3-pip
 
 # Install python requirements
 COPY requirements.txt /tmp/requirements.txt
+RUN python3 -m pip install --upgrade pip
 RUN python3 -m pip install -r /tmp/requirements.txt
 
 # Make directory /nwserver
