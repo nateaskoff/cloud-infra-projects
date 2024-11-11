@@ -123,18 +123,24 @@ jobs:
     environment:
       name: dev
     env:
+      AWS_REGION: "us-east-1"
+      AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+      AWS_SESSION_NAME: "GitHubActions-botdr-${{ github.sha }}"
+      AWS_WEB_IDENTITY_TOKEN_URL: "https://token.actions.githubusercontent.com"
       TF_WORKSPACE: "dev-botdr"
       TF_TOKEN_app_terraform_io: ${{ secrets.TF_TOKEN }}
+      TF_VAR_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+      TF_VAR_assume_role_name: ${{ secrets.AWS_ROLE_NAME }}
+      TF_VAR_fly_io_app_ip: "10.0.0.1" # placeholder
       AWS_S3_CF_BUCKET_ID: "dev-botdr-primary-site-web-bucket"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Setup OIDC AWS
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}
-          role-session-name: GitHubActions-botdr-${{ github.sha }}
-          aws-region: us-east-1
+        run: |
+          chmod +x ./export_aws_oidc_env_vars.sh
+          ./export_aws_oidc_env_vars.sh
+        working-directory: "${{ github.workspace }}/.ci_cd/scripts"
       - name: Set Up Fly.io CLI
         uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Test Fly.io Connection

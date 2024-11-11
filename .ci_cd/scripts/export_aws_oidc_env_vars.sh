@@ -8,10 +8,15 @@ set -e
 : "${AWS_ACCOUNT_ID:?Environment variable AWS_ACCOUNT_ID is required}"
 : "${TF_VAR_assume_role_name:?Environment variable TF_VAR_assume_role_name is required}"
 : "${AWS_SESSION_NAME:?Environment variable AWS_SESSION_NAME is required}"
-: "${AWS_WEB_IDENTITY_TOKEN_URL:?Environment variable AWS_WEB_IDENTITY_TOKEN_URL is required}"
+: "${ACTIONS_ID_TOKEN:?Environment variable ACTIONS_ID_TOKEN is required}"  # Use GitHub-provided OIDC token
 
-# Get the Web Identity Token from GitHub Actions OIDC (it's available automatically)
-WEB_IDENTITY_TOKEN=$(curl -sL "$AWS_WEB_IDENTITY_TOKEN_URL/.well-known/openid-configuration" | jq -r .issuer)
+# Debug: Print the variables to ensure they're correctly set
+echo "AWS Region: $AWS_REGION"
+echo "Role ARN: arn:aws:iam::$AWS_ACCOUNT_ID:role/$TF_VAR_assume_role_name"
+echo "Session Name: $AWS_SESSION_NAME"
+
+# The OIDC ID Token is available as ACTIONS_ID_TOKEN environment variable
+WEB_IDENTITY_TOKEN=$ACTIONS_ID_TOKEN
 
 # Check if the token is fetched successfully
 if [ -z "$WEB_IDENTITY_TOKEN" ]; then
