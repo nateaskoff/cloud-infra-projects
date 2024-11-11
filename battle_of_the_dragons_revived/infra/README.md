@@ -26,7 +26,7 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_env"></a> [env](#input\_env) | The environment to deploy to | `string` | `"dev"` | no |
+| <a name="input_env"></a> [env](#input\_env) | The environment to deploy to | `string` | n/a | yes |
 
 ## Outputs
 
