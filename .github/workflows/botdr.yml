@@ -103,8 +103,7 @@ jobs:
         run: terraform validate
         working-directory: "${{ env.repo_path }}/infra"
       - name: Terraform Plan
-        run: terraform plan
-        working-directory: "${{ env.repo_path }}/infra"
+        run: terraform plan -chdir="${{ env.repo_path }}/infra"
 
   deploy:
     runs-on: ubuntu-latest
