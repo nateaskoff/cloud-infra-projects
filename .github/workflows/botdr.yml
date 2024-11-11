@@ -20,27 +20,31 @@ env:
   terraform_version: "1.9.8"
 
 jobs:
-  unit-tests:
+  aws-oidc-check:
     runs-on: ubuntu-latest
-    env:
-      app_env: "dev"
-      TF_TOKEN_app_terraform_io: ${{ secrets.TF_CLOUD_TEAM_TOKEN }}
-      TF_WORKSPACE: "dev-botdr"
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
       - name: Setup OIDC AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}
           role-session-name: GitHubActions-botdr-${{ github.sha }}
           aws-region: us-east-1
+
+  fly-io-check:
+    runs-on: ubuntu-latest
+    steps:
       - name: Set Up Fly.io CLI
         uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Test Fly.io Connection
         run: flyctl orgs list
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_IO_API_TOKEN }}
+
+  security-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Set Up Python
         uses: actions/setup-python@v5
         with:
@@ -49,12 +53,24 @@ jobs:
         run: pip install checkov
       - name: Run Checkov
         run: checkov -d ${{ env.repo_path }} --quiet
+
+  cost-estimation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Set Up Infracost
         uses: infracost/actions/setup@v3
         with:
           api-key: ${{ secrets.INFRACOST_API_TOKEN }}
       - name: Run Infracost
         run: infracost breakdown --path ${{ env.repo_path }}
+
+  build-and-test-yarn:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
@@ -70,6 +86,12 @@ jobs:
       - name: Run Yarn Build
         run: yarn build
         working-directory: "${{ env.repo_path }}/web"
+
+  terraform-plan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Set Up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
@@ -92,13 +114,15 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: unit-tests
+    needs:
+      - aws-oidc-check
+      - fly-io-check
+      - security-analysis
+      - cost-estimation
+      - build-and-test-yarn
+      - terraform-plan
     environment:
       name: dev
-    env:
-      app_env: "dev"
-      TF_TOKEN_app_terraform_io: ${{ secrets.TF_CLOUD_TEAM_TOKEN }}
-      TF_WORKSPACE: "dev-botdr"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
