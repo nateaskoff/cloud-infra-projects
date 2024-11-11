@@ -1,8 +1,10 @@
 terraform {
   required_version = "1.9.8"
 
-  backend "local" {
-    path = "terraform.tfstate"
+  backend "s3" {
+    bucket = "cloud-infra-projects-tf-state"
+    key    = "${var.env}/botdr/terraform.tfstate"
+    region = "us-east-1"
   }
 
   required_providers {
