@@ -104,7 +104,6 @@ jobs:
         with:
           workspace: ${{ env.TF_WORKSPACE }}
           path: "${{ env.repo_path }}/infra"
-          backend_config: TF_TOKEN_app_terraform_io=${{ secrets.TF_TOKEN }}
       - name: Terraform Init
         run: terraform init
         working-directory: "${{ env.repo_path }}/infra"
