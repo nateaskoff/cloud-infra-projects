@@ -138,9 +138,11 @@ jobs:
       FLY_IO_PORT: "5121"
       FLY_IO_KILL_SIGNAL: "SIGTERM"
       FLY_IO_KILL_TIMEOUT: "300"
+      FLY_IO_CPUS_KIND: "shared"
       FLY_IO_CPUS: "0.25"
       FLY_IO_MEMORY: "128"
       FLY_IO_DOCKERFILE_PATH: "Dockerfile"
+      FLY_IO_VOLUME_INIT_SIZE: "10"
       FLY_IO_VOLUMES: "/nwn/home"
     steps:
       - name: Checkout code
@@ -193,13 +195,11 @@ jobs:
           flyctl deploy \
             --app ${{ env.FLY_IO_APP_NAME }} \
             --regions ${{ env.FLY_IO_APP_REGION }} \
-            --org ${{ env.FLY_IO_ORG }} \
-            --port ${{ env.FLY_IO_PORT }} \
-            --kill-signal ${{ env.FLY_IO_KILL_SIGNAL }} \
-            --kill-timeout ${{ env.FLY_IO_KILL_TIMEOUT }} \
-            --cpu ${{ env.FLY_IO_CPUS }} \
-            --memory ${{ env.FLY_IO_MEMORY }} \
+            --vm-cpus-kind ${{ env.FLY_IO_CPUS_KIND }} \
+            --vm-cpus ${{ env.FLY_IO_CPUS }} \
+            --vm-memory ${{ env.FLY_IO_MEMORY }} \
             --dockerfile ${{ env.FLY_IO_DOCKERFILE_PATH }} \
+            --volume-initial-size ${{ env.FLY_IO_VOLUME_INIT_SIZE }} \
             --volume ${{ env.FLY_IO_VOLUMES }}
         working-directory: "${{ env.repo_path }}/app"
         env:
