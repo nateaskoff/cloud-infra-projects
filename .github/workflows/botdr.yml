@@ -99,18 +99,18 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ env.terraform_version }}
-      - name: Terraform Init
-        run: terraform init
-        working-directory: "${{ env.repo_path }}/infra"
-      - name: Terraform Validate
-        run: terraform validate
-        working-directory: "${{ env.repo_path }}/infra"
       - name: Create Terraform Workspace
         uses: dflook/terraform-new-workspace@v1.44.0
         with:
           workspace: ${{ env.TF_WORKSPACE }}
           path: "${{ env.repo_path }}/infra"
           backend_config: token=${{ secrets.TF_CLOUD_TEAM_TOKEN }}
+      - name: Terraform Init
+        run: terraform init
+        working-directory: "${{ env.repo_path }}/infra"
+      - name: Terraform Validate
+        run: terraform validate
+        working-directory: "${{ env.repo_path }}/infra"
       - name: Terraform Plan
         run: terraform plan
         working-directory: "${{ env.repo_path }}/infra"
@@ -128,7 +128,7 @@ jobs:
       name: dev
     env:
       TF_WORKSPACE: "dev-botdr"
-      TF_TOKEN: ${{ secrets.TF_TOKEN }}
+      TF_TOKEN_app_terraform_io: ${{ secrets.TF_TOKEN }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
