@@ -139,7 +139,7 @@ jobs:
       FLY_IO_KILL_SIGNAL: "SIGTERM"
       FLY_IO_KILL_TIMEOUT: "300"
       FLY_IO_CPUS_KIND: "shared"
-      FLY_IO_CPUS: "shared-cpu-1x"
+      FLY_IO_CPUS: "1"
       FLY_IO_MEMORY: "256"
       FLY_IO_DOCKERFILE_PATH: "Dockerfile"
       FLY_IO_VOLUME_INIT_SIZE: "10"
