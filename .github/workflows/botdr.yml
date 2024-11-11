@@ -97,6 +97,7 @@ jobs:
       - name: Get local system to find the aws credential file
         run: |
           Get-ChildItem -Recurse
+          Get-Content $env:USERPROFILE\.aws\credentials
         shell: pwsh
       - name: Set Up Terraform
         uses: hashicorp/setup-terraform@v3
