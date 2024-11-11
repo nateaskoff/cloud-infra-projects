@@ -40,7 +40,7 @@ resource "aws_s3_bucket" "mod_bucket" {
   #checkov:skip=CKV2_AWS_62
   #checkov:skip=CKV_AWS_18
   #checkov:skip=CKV_AWS_144
-  bucket = "${lower(var.env)}-botdr-primary-site-web-bucket"
+  bucket = "${lower(var.env)}-botdr-mod-bucket"
 }
 
 resource "aws_s3_bucket_public_access_block" "mod_bucket_acc_blk" {
