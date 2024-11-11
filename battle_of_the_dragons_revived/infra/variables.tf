@@ -15,3 +15,8 @@ variable "env" {
   description = "The environment to deploy to"
   default     = "dev"
 }
+
+variable "github_sha" {
+  type        = string
+  description = "The GitHub SHA to deploy"
+}
