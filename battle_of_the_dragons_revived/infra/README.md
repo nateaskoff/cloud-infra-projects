@@ -30,6 +30,7 @@ No resources.
 | <a name="input_assume_role_name"></a> [assume\_role\_name](#input\_assume\_role\_name) | The name of the role to assume | `string` | n/a | yes |
 | <a name="input_env"></a> [env](#input\_env) | The environment to deploy to | `string` | `"dev"` | no |
 | <a name="input_fly_io_app_ip"></a> [fly\_io\_app\_ip](#input\_fly\_io\_app\_ip) | The IP address of the Fly.io app | `string` | n/a | yes |
+| <a name="input_web_identity_token"></a> [web\_identity\_token](#input\_web\_identity\_token) | The AWS Web Identity Token | `string` | n/a | yes |
 
 ## Outputs
 

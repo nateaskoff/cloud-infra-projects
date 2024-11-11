@@ -10,6 +10,12 @@ variable "assume_role_name" {
   sensitive   = true
 }
 
+variable "web_identity_token" {
+  type        = string
+  description = "The AWS Web Identity Token"
+  sensitive   = true
+}
+
 variable "env" {
   type        = string
   description = "The environment to deploy to"
