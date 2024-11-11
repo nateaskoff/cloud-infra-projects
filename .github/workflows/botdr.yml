@@ -100,10 +100,8 @@ jobs:
         with:
           terraform_version: ${{ env.terraform_version }}
       - name: Create Terraform Workspace
-        uses: dflook/terraform-new-workspace@v1.44.0
-        with:
-          workspace: ${{ env.TF_WORKSPACE }}
-          path: "${{ env.repo_path }}/infra"
+        run: terraform workspace new dev-botdr || terraform workspace select dev-botdr
+        working-directory: "${{ env.repo_path }}/infra"
       - name: Terraform Init
         run: terraform init
         working-directory: "${{ env.repo_path }}/infra"
