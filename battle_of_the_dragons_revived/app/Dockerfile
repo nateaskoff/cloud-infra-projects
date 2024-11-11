@@ -2,10 +2,8 @@
 FROM ubuntu:22.04
 
 # Install dependencies
-RUN apt-get update && \
-  apt-get -y install \
-    libc6:i386 libstdc++6:i386 wget unzip awscli supervisor && \
-  rm -r /var/cache/apt /var/lib/apt/lists
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y libc6-i386 libstdc++6-i386-cross wget unzip supervisor
 
 # Make directory /nwserver
 RUN mkdir /nwserver
