@@ -24,7 +24,11 @@ app_volumes = os.getenv('FLY_IO_VOLUMES', [])
 fly = Fly(fly_api_token)
 
 # list apps to see if the app already exists
-fly_apps = asyncio.run(fly.Org(app_org).list_apps())
+try:
+    fly_apps = asyncio.run(fly.Org(app_org).list_apps())
+except Exception as e:
+    logger.warning("No apps found in org: %s", app_org)
+    fly_apps = []
 
 # if the app doesn't exist, create it, otherwise deploy a new version
 if app_name not in fly_apps:
