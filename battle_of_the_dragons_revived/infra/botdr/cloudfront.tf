@@ -14,7 +14,7 @@ resource "aws_cloudfront_distribution" "cf_dist_botdr_web" {
   comment             = "${var.env}-botdr-web-cf-dist"
   default_root_object = "index.html"
 
-  aliases = var.env == "dev" ? "${lower(var.env)}.${data.aws_route53_zone.botdr_zone.name}" : data.aws_route53_zone.botdr_zone.name
+  aliases = var.env == "dev" ? ["${lower(var.env)}.${data.aws_route53_zone.botdr_zone.name}"] : [data.aws_route53_zone.botdr_zone.name]
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
