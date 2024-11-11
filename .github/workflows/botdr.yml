@@ -120,6 +120,8 @@ jobs:
       - cost-estimation
       - build-and-test-yarn
       - terraform-plan
+    concurrency:
+      group: dev-botdr
     environment:
       name: DEV
     env:
