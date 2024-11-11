@@ -9,9 +9,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
 # Get env vars
-aws_region = os.getenv("FLY_IO_APP_AWS_REGION")
-aws_access_key_id = os.getenv("FLY_IO_APP_AWS_ACCESS_KEY_ID")
-aws_secret_access_key = os.getenv("FLY_IO_APP_AWS_SECRET_ACCESS_KEY")
+aws_region = os.getenv("AWS_REGION")
+aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
+aws_secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY")
 mod_s3_bucket = os.getenv("AWS_S3_MOD_BUCKET_ID")
 
 # Set up s3 client
