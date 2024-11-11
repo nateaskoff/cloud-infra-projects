@@ -1,6 +1,6 @@
 resource "aws_route53_record" "botdr_web" {
   zone_id = data.aws_route53_zone.botdr_zone.zone_id
-  name    = var.env == "dev" ? "web${var.env}.battleofthedragonsrevived.com" : "battleofthedragonsrevived.com"
+  name    = var.env == "dev" ? "${lower(var.env)}.${data.aws_route53_zone.botdr_zone.name}" : data.aws_route53_zone.botdr_zone.name
   type    = "A"
 
   alias {
