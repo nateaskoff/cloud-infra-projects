@@ -1,54 +1,43 @@
-FROM i386/debian:stretch-slim as builder
-
-ARG NWN_VERSION=8152
-
-RUN apt-get update
-RUN apt-get -y install unzip wget
-RUN mkdir -p /nwn/nwnx
-
-# Use wget instead of ADD
-RUN wget https://nwnx.io/nwnee-dedicated-${NWN_VERSION}.zip -O /nwn/tmp/nwnee-dedicated.zip
-RUN unzip /nwn/tmp/nwnee-dedicated.zip -d /nwn/data
-
 FROM i386/debian:stretch-slim
-LABEL maintainer "niv@beamdog.com"
 
+# Install dependencies
 RUN apt-get update && \
   apt-get --no-install-recommends -y install \
-    libc6:i386 libstdc++6:i386 && \
+    libc6:i386 libstdc++6:i386 wget unzip awscli supervisor && \
   rm -r /var/cache/apt /var/lib/apt/lists
 
-RUN mkdir -p /nwn/data /nwn/home /nwn/run
+# Make directory /nwserver
+RUN mkdir /nwserver
 
-# Copy the server binaries from builder image
-COPY --from=builder /nwn/data/data /nwn/data/data
+# Make nwserver-user with home directory
+RUN useradd nwserver-user -s /bin/bash -m -d /home/nwserver-user
 
-ENV NWN_ARCH linux-x86
+# Add nwserver-user to group nwserver-group
+RUN groupadd nwserver-group
+RUN usermod -a -G nwserver-group nwserver-user
 
-COPY --from=builder /nwn/data/bin/${NWN_ARCH} /nwn/data/bin/${NWN_ARCH}
-RUN chmod +x /nwn/data/bin/${NWN_ARCH}/nwserver-linux
+# Change owner of /nwserver to nwserver-user
+RUN chown nwserver-user:nwserver-group /nwserver
 
-COPY /docker/run-server.sh /docker/prep-nwn-ini.awk /docker/prep-nwnplayer-ini.awk /nwn/
-RUN chmod +x /nwn/run-server.sh
+# Download NWN:EE server for linux to /tmp
+RUN wget -O /tmp/nwserver-linux.zip https://nwn.beamdog.com/downloads/nwnee-linux.zip
 
-# Create a non-root user
-RUN groupadd -r nwn && useradd --no-log-init -r -g nwn nwn
-RUN chown -R nwn:nwn /nwn
+# Unzip the downloaded file to /nwserver
+RUN unzip /tmp/nwserver-linux.zip -d /nwserver
 
-# Switch to the non-root user
-USER nwn
+# Set nwserver-linux to mode a+x for nwserver-user
+RUN chmod a+x /nwserver/bin/linux-x86/nwserver-linux
 
-VOLUME /nwn/home
+# Change to nwserver-user
+USER nwserver-user
 
-EXPOSE ${NWN_PORT:-5121}/udp
+# If the path ~/.local/share/Neverwinter Nights/modules/ does not exist, create it
+RUN mkdir -p ~/.local/share/Neverwinter\ Nights/modules/
 
-ENV NWN_TAIL_LOGS=y
-ENV NWN_EXTRA_ARGS="-userdirectory /nwn/run"
+# copy supervisord.conf to default location
+COPY supervisord.conf /etc/supervisor/supervisord.conf
 
-WORKDIR /nwn/data/bin/${NWN_ARCH}
+# copy supervisor.sh to /nwserver
+COPY supervisor.sh /nwserver/supervisor.sh
 
-# Add HEALTHCHECK
-HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
-  CMD curl --fail http://localhost:${NWN_PORT:-5121} || exit 1
-
-ENTRYPOINT ["/nwn/run-server.sh"]
+CMD ["/bin/bash", "supervisor.sh"]
