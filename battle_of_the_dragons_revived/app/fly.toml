@@ -12,7 +12,7 @@
 
   [services.concurrency]
     soft_limit = 50
-    hard_limit = 100
+    hard_limit = 50
 
   [[services.ports]]
     handlers = ["http"]

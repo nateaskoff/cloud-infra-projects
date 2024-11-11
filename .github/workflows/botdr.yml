@@ -199,7 +199,8 @@ jobs:
             --vm-cpus ${{ env.FLY_IO_CPUS }} \
             --vm-memory ${{ env.FLY_IO_MEMORY }} \
             --dockerfile ${{ env.FLY_IO_DOCKERFILE_PATH }} \
-            --volume-initial-size ${{ env.FLY_IO_VOLUME_INIT_SIZE }}
+            --volume-initial-size ${{ env.FLY_IO_VOLUME_INIT_SIZE }} \
+            --ha=false
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_IO_API_TOKEN }}
       - name: Set Up Terraform
