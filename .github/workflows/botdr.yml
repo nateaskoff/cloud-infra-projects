@@ -84,7 +84,6 @@ jobs:
       TF_TOKEN_app_terraform_io: ${{ secrets.TF_TOKEN }}
       TF_VAR_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
       TF_VAR_assume_role_name: ${{ secrets.AWS_ROLE_NAME }}
-      TF_VAR_fly_io_app_ip: "10.0.0.1" # placeholder
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -94,20 +93,19 @@ jobs:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}
           role-session-name: GitHubActions-botdr-${{ github.sha }}
           aws-region: us-east-1
-          output-credentials: true
       - name: Set Up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ env.terraform_version }}
-      #- name: Terraform Init
-      #  run: terraform init
-      #  working-directory: "${{ env.repo_path }}/infra"
-      #- name: Terraform Validate
-      #  run: terraform validate
-      #  working-directory: "${{ env.repo_path }}/infra"
-      #- name: Terraform Plan
-      #  run: terraform plan
-      #  working-directory: "${{ env.repo_path }}/infra"
+      - name: Terraform Init
+        run: terraform init
+        working-directory: "${{ env.repo_path }}/infra"
+      - name: Terraform Validate
+        run: terraform validate
+        working-directory: "${{ env.repo_path }}/infra"
+      - name: Terraform Plan
+        run: terraform plan
+        working-directory: "${{ env.repo_path }}/infra"
 
   deploy:
     runs-on: ubuntu-latest
@@ -171,13 +169,13 @@ jobs:
       - name: Deploy Fly.io App
         run: python3 fly.py
         working-directory: "${{ env.repo_path }}/app"
-      #- name: Set Up Terraform
-      #  uses: hashicorp/setup-terraform@v3
-      #  with:
-      #    terraform_version: ${{ env.terraform_version }}
-      #- name: Terraform Init
-      #  run: terraform init
-      #  working-directory: "${{ env.repo_path }}/infra"
-      #- name: Terraform Apply
-      #  run: terraform apply -auto-approve
-      #  working-directory: "${{ env.repo_path }}/infra"
+      - name: Set Up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.terraform_version }}
+      - name: Terraform Init
+        run: terraform init
+        working-directory: "${{ env.repo_path }}/infra"
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        working-directory: "${{ env.repo_path }}/infra"

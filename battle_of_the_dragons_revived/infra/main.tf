@@ -23,7 +23,6 @@ provider "aws" {
 }
 
 module "botdr" {
-  source        = "./botdr"
-  env           = var.env
-  fly_io_app_ip = var.fly_io_app_ip
+  source = "./botdr"
+  env    = var.env
 }

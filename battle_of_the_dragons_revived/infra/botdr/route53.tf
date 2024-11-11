@@ -1,14 +1,3 @@
-resource "aws_route53_record" "botdr_app" {
-  #checkov:skip=CKV2_AWS_23:this is pointing to an external IP in fly.io
-  zone_id = data.aws_route53_zone.botdr_zone.zone_id
-  name    = "app-${var.env}.battleofthedragonsrevived.com"
-  type    = "A"
-  ttl     = "300"
-  records = [
-    var.fly_io_app_ip
-  ]
-}
-
 resource "aws_route53_record" "botdr_web" {
   zone_id = data.aws_route53_zone.botdr_zone.zone_id
   name    = var.env == "dev" ? "web${var.env}.battleofthedragonsrevived.com" : "battleofthedragonsrevived.com"

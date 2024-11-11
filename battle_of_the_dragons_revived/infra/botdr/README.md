@@ -27,7 +27,6 @@ No modules.
 | [aws_cloudfront_distribution.cf_dist_botdr_web](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/resources/cloudfront_distribution) | resource |
 | [aws_cloudfront_origin_access_control.default](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/resources/cloudfront_origin_access_control) | resource |
 | [aws_cloudfront_response_headers_policy.default](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/resources/cloudfront_response_headers_policy) | resource |
-| [aws_route53_record.botdr_app](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/resources/route53_record) | resource |
 | [aws_route53_record.botdr_web](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/resources/route53_record) | resource |
 | [aws_route53_record.web_cert_val_record](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/resources/route53_record) | resource |
 | [aws_s3_bucket.web_bucket](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/resources/s3_bucket) | resource |
@@ -42,7 +41,6 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_env"></a> [env](#input\_env) | The environment to deploy to | `string` | `"dev"` | no |
-| <a name="input_fly_io_app_ip"></a> [fly\_io\_app\_ip](#input\_fly\_io\_app\_ip) | The IP address of the Fly.io app | `string` | n/a | yes |
 
 ## Outputs
 
