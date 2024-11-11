@@ -100,7 +100,7 @@ jobs:
         with:
           terraform_version: ${{ env.terraform_version }}
       - name: Terraform Init
-        run: ../.ci_cd/scripts/tf_init.sh
+        run: ${{ github.workspace }}/.ci_cd/scripts/tf_init.sh
         working-directory: "${{ env.repo_path }}/infra"
       - name: Terraform Validate
         run: terraform validate
