@@ -183,12 +183,12 @@ jobs:
 
           # If the app does not exist, create it
           if [ $FLY_APP_EXISTS -eq 0 ]; then
-            flyctl apps create ${{ env.FLY_IO_APP_NAME }} --org ${{ env.FLY_IO_ORG }} --region ${{ env.FLY_IO_APP_REGION }}
+            flyctl apps create ${{ env.FLY_IO_APP_NAME }}
           fi
 
           # If the app exists, update it
           if [ $FLY_APP_EXISTS -eq 1 ]; then
-            flyctl apps update ${{ env.FLY_IO_APP_NAME }} --org ${{ env.FLY_IO_ORG }} --region ${{ env.FLY_IO_APP_REGION }}
+            flyctl apps update ${{ env.FLY_IO_APP_NAME }}
           fi
         working-directory: "${{ env.repo_path }}/app"
         env:
