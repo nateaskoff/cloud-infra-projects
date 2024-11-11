@@ -89,12 +89,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Setup OIDC AWS
+        id: aws-oidc
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}
           role-session-name: GitHubActions-botdr-${{ github.sha }}
           aws-region: us-east-1
           output-credentials: true
+      - name: Create OIDC Token File
+        run: echo "${{ steps.aws-oidc.outputs.web_identity_token }}" > /github/workspace/.aws/oidc-token
+        env:
+          web_identity_token: ${{ steps.aws-oidc.outputs.web_identity_token }}
       - name: Set Up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
