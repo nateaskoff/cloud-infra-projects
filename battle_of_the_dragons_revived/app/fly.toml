@@ -1,0 +1,21 @@
+[env]
+  NWN_VERSION = "8152"
+  NWN_ARCH = "linux-x86"
+
+[[volumes]]
+  name="nwn-data"
+  size_gb = 10
+
+[[services]]
+  internal_port = 5121
+  ports = ["5121/udp"]
+  [services.concurrency]
+    soft_limit = 50
+    hard_limit = 100
+  [services.restart]
+    grace_period = "300s"
+    interval = "15m"
+    timeout = "5s"
+
+[deploy]
+  strategy = "rolling"
