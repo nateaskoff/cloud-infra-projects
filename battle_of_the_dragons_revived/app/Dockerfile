@@ -1,5 +1,5 @@
 #checkov:skip=CKV_DOCKER_2:no way to do health check with nwserver
-FROM i386/debian:stretch-slim
+FROM 32bit/ubuntu
 
 # Install dependencies
 RUN apt-get update && \
