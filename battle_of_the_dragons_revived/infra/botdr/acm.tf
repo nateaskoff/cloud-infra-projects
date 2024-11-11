@@ -2,7 +2,7 @@ resource "aws_acm_certificate" "web_cert" {
   domain_name       = data.aws_route53_zone.botdr_zone.name
   validation_method = "DNS"
   subject_alternative_names = [
-    var.env == "DEV" ? "${lower(var.env)}.${data.aws_route53_zone.botdr_zone.name}" : data.aws_route53_zone.botdr_zone.name,
+    var.env == "dev" ? "${lower(var.env)}.${data.aws_route53_zone.botdr_zone.name}" : data.aws_route53_zone.botdr_zone.name,
   ]
 
   lifecycle {
