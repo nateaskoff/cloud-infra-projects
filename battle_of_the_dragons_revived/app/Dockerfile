@@ -3,7 +3,7 @@ FROM i386/debian:stretch-slim
 
 # Install dependencies
 RUN apt-get update && \
-  apt-get --no-install-recommends -y install \
+  apt-get -y install \
     libc6:i386 libstdc++6:i386 wget unzip awscli supervisor && \
   rm -r /var/cache/apt /var/lib/apt/lists
 
