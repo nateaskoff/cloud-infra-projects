@@ -83,9 +83,6 @@ jobs:
     env:
       TF_WORKSPACE: "dev-botdr"
       TF_TOKEN_app_terraform_io: ${{ secrets.TF_TOKEN }}
-      TF_VAR_AWS_DEFAULT_REGION: "us-east-1"
-      TF_VAR_TFC_AWS_PROVIDER_AUTH: "true"
-      TF_VAR_TFC_AWS_RUN_ROLE_ARN: "arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}"
       TF_VAR_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
       TF_VAR_assume_role_name: ${{ secrets.AWS_ROLE_NAME }}
       TF_VAR_fly_io_app_ip: "10.0.0.1" # placeholder
@@ -93,11 +90,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Setup OIDC AWS
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}
-          role-session-name: GitHubActions-botdr-${{ github.sha }}
-          aws-region: us-east-1
+        run: |
+          chmod +x ./export_aws_oidc_env_vars.sh
+          ./export_aws_oidc_env_vars.sh
+        working-directory: "${{ github.workspace }}/.ci_cd/scripts"
       - name: Set Up Terraform
         uses: hashicorp/setup-terraform@v3
         with:

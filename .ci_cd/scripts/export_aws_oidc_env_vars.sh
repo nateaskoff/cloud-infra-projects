@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# Exit on any error
+set -e
+
+# Ensure required environment variables are set
+: "${AWS_REGION:?Environment variable AWS_REGION is required}"
+: "${ROLE_ARN:?Environment variable ROLE_ARN is required}"
+: "${SESSION_NAME:?Environment variable SESSION_NAME is required}"
+: "${WEB_IDENTITY_TOKEN_URL:?Environment variable WEB_IDENTITY_TOKEN_URL is required}"
+
+# Get the Web Identity Token from GitHub Actions (already available in $GITHUB_TOKEN)
+# GitHub automatically injects the OIDC token as a web identity token for the actions.
+WEB_IDENTITY_TOKEN=$(cat /proc/self/environ | grep -z 'GITHUB_TOKEN=' | sed 's/^.*GITHUB_TOKEN=//g' | tr -d '\0')
+
+# Check if the token is fetched successfully
+if [ -z "$WEB_IDENTITY_TOKEN" ]; then
+  echo "Error: Web Identity Token could not be retrieved."
+  exit 1
+fi
+
+# Assume role using AWS CLI and Web Identity Token
+CREDS_JSON=$(aws sts assume-role-with-web-identity \
+  --role-arn "$ROLE_ARN" \
+  --role-session-name "$SESSION_NAME" \
+  --web-identity-token "$WEB_IDENTITY_TOKEN" \
+  --duration-seconds 3600 \
+  --region "$AWS_REGION" \
+  --output json)
+
+# Extract the temporary credentials from the assume-role response
+AWS_ACCESS_KEY_ID=$(echo $CREDS_JSON | jq -r .Credentials.AccessKeyId)
+AWS_SECRET_ACCESS_KEY=$(echo $CREDS_JSON | jq -r .Credentials.SecretAccessKey)
+AWS_SESSION_TOKEN=$(echo $CREDS_JSON | jq -r .Credentials.SessionToken)
+
+# Generate the credentials file in /tmp/aws-oidc-credentials
+CREDENTIALS_FILE="/tmp/aws-oidc-credentials"
+
+mkdir -p $(dirname "$CREDENTIALS_FILE")  # Create the directory if it doesn't exist
+
+# Write the temporary credentials to the file in AWS CLI credentials format
+cat <<EOL > "$CREDENTIALS_FILE"
+[default]
+aws_access_key_id = $AWS_ACCESS_KEY_ID
+aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
+aws_session_token = $AWS_SESSION_TOKEN
+EOL
+
+echo "AWS credentials have been written to $CREDENTIALS_FILE."
+
+# Optionally, verify by listing S3 buckets (or any other AWS command)
+echo "Verifying AWS credentials by listing S3 buckets..."
+AWS_SHARED_CREDENTIALS_FILE="$CREDENTIALS_FILE" aws s3 ls
