@@ -20,16 +20,6 @@ env:
   terraform_version: "1.9.8"
 
 jobs:
-  aws-oidc-check:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup OIDC AWS
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}
-          role-session-name: GitHubActions-botdr-${{ github.sha }}
-          aws-region: us-east-1
-
   fly-io-check:
     runs-on: ubuntu-latest
     steps:
@@ -98,6 +88,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Setup OIDC AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}
+          role-session-name: GitHubActions-botdr-${{ github.sha }}
+          aws-region: us-east-1
       - name: Set Up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
