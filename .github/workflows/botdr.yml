@@ -99,11 +99,11 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ env.terraform_version }}
-      - name: Create Terraform Workspace
-        run: terraform workspace new dev-botdr || terraform workspace select dev-botdr
-        working-directory: "${{ env.repo_path }}/infra"
       - name: Terraform Init
         run: terraform init
+        working-directory: "${{ env.repo_path }}/infra"
+      - name: Create or Select Terraform Workspace
+        run: terraform workspace new dev-botdr || terraform workspace select dev-botdr
         working-directory: "${{ env.repo_path }}/infra"
       - name: Terraform Validate
         run: terraform validate
