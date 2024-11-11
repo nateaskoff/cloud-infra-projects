@@ -3,7 +3,8 @@ FROM ubuntu:22.04
 
 # Install dependencies
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y libc6-i386 libstdc++6-i386-cross wget unzip supervisor
+RUN apt-get install -y libc6-i386 libstdc++6-i386-cross wget unzip supervisor python3
+RUN python3 -m pip install boto3
 
 # Make directory /nwserver
 RUN mkdir /nwserver
@@ -39,4 +40,7 @@ COPY supervisord.conf /etc/supervisor/supervisord.conf
 # copy supervisor.sh to /nwserver
 COPY supervisor.sh /nwserver/supervisor.sh
 
-CMD ["/bin/bash", "supervisor.sh"]
+# copy nw_server.py to /nwserver
+COPY nw_server.py /nwserver/nw_server.py
+
+CMD ["python3", "nw_server.py"]

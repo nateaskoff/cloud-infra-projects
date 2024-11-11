@@ -131,9 +131,13 @@ jobs:
       TF_STATE_BUCKET_REGION: "us-east-1"
       TF_STATE_BUCKET_KEY: "dev/botdr/terraform.tfstate"
       AWS_S3_CF_BUCKET_ID: "dev-botdr-primary-site-web-bucket"
+      AWS_S3_MOD_BUCKET_ID: "dev-botdr-mod-bucket"
       FLY_IO_API_TOKEN: ${{ secrets.FLY_IO_API_TOKEN }}
       FLY_IO_APP_NAME: "dev-botdr"
       FLY_IO_APP_REGION: "iad"
+      FLY_IO_APP_AWS_REGION: "us-east-1"
+      FLY_IO_APP_AWS_ACCESS_KEY_ID: ${{ secrets.FLY_IO_APP_AWS_ACCESS_KEY_ID }}
+      FLY_IO_APP_AWS_SECRET_ACCESS_KEY: ${{ secrets.FLY_IO_APP_AWS_SECRET_ACCESS_KEY }}
       FLY_IO_ORG: "cloud-infra-projects"
       FLY_IO_PORT: "5121"
       FLY_IO_KILL_SIGNAL: "SIGTERM"
@@ -190,7 +194,13 @@ jobs:
         working-directory: "${{ env.repo_path }}/app"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_IO_API_TOKEN }}
-      - name: Deploy Fly.io App
+      - name: Write Fly.io Secrets
+        run: |
+          flyctl secrets set AWS_ACCESS_KEY_ID=${{ secrets.FLY_IO_APP_AWS_ACCESS_KEY_ID }}
+          flyctl secrets set AWS_SECRET_ACCESS_KEY=${{ secrets.FLY_IO_APP_AWS_SECRET_ACCESS_KEY }}
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_IO_API_TOKEN }}
+      - name: Deploy Fly.io Container
         run: |
           flyctl deploy ${{ env.repo_path }}/app \
             --app ${{ env.FLY_IO_APP_NAME }} \
@@ -200,6 +210,8 @@ jobs:
             --vm-memory ${{ env.FLY_IO_MEMORY }} \
             --dockerfile ${{ env.FLY_IO_DOCKERFILE_PATH }} \
             --volume-initial-size ${{ env.FLY_IO_VOLUME_INIT_SIZE }} \
+            --env "AWS_S3_MOD_BUCKET_ID=${{ env.AWS_S3_MOD_BUCKET_ID }}" \
+            --env "FLY_IO_APP_AWS_REGION=${{ env.FLY_IO_APP_AWS_REGION }}" \
             --ha=false
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_IO_API_TOKEN }}
