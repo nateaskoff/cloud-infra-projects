@@ -45,6 +45,16 @@ data "aws_iam_policy_document" "botdr_fly_io_user_policy_doc" {
 
   statement {
     actions = [
+      "s3:ListAllMyBuckets"
+    ]
+
+    resources = [
+      "arn:aws:s3:::*"
+    ]
+  }
+
+  statement {
+    actions = [
       "s3:GetObject",
       "s3:ListBucket"
     ]
