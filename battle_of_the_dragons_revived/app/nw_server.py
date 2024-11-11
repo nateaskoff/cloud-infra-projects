@@ -45,3 +45,6 @@ def test_s3_connection():
 if __name__ == "__main__":
     # Test s3 connection
     test_s3_connection()
+
+    # Start supervisor
+    start_supervisor()
