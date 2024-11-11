@@ -81,7 +81,10 @@ jobs:
   terraform-plan:
     runs-on: ubuntu-latest
     env:
+      AWS_DEFAULT_REGION: "us-east-1"
       TF_WORKSPACE: "dev-botdr"
+      TFC_AWS_PROVIDER_AUTH: "true"
+      TFC_AWS_RUN_ROLE_ARN: "arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}"
       TF_TOKEN_app_terraform_io: ${{ secrets.TF_TOKEN }}
       TF_VAR_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
       TF_VAR_assume_role_name: ${{ secrets.AWS_ROLE_NAME }}
@@ -90,7 +93,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Setup OIDC AWS
-        id: aws-oidc
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}
@@ -128,7 +130,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Setup OIDC AWS
-        id: aws-oidc
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}
