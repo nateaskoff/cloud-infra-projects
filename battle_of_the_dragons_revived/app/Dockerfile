@@ -19,7 +19,7 @@ RUN usermod -a -G nwserver-group nwserver-user
 RUN chown nwserver-user:nwserver-group /nwserver
 
 # Download NWN:EE server for linux to /tmp
-RUN wget -O /tmp/nwserver-linux.zip https://nwn.beamdog.com/downloads/nwnee-linux.zip
+RUN wget -O /tmp/nwserver-linux.zip https://nwn.beamdog.net/downloads/nwnee-dedicated-8193.34.zip
 
 # Unzip the downloaded file to /nwserver
 RUN unzip /tmp/nwserver-linux.zip -d /nwserver
