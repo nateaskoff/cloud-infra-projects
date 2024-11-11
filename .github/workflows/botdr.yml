@@ -94,13 +94,9 @@ jobs:
           role-session-name: GitHubActions-botdr-${{ github.sha }}
           aws-region: us-east-1
           output-credentials: true
-      - name: Get local system to find the aws credential file
+      - name: Output Web Identity Token to Credential File
         run: |
-          Get-ChildItem -Recurse
-          # get all variables in the environment
-          Get-ChildItem Env:
-          Write-Output $GITHUB_ENV | ConvertTo-Json
-        shell: pwsh
+          curl -s -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" | jq -r '.value' > /tmp/aws-oidc-credentials
       - name: Set Up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
