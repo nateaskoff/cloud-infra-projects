@@ -177,7 +177,19 @@ jobs:
         run: pip install -r requirements.txt
         working-directory: "${{ env.repo_path }}/app"
       - name: Deploy Fly.io App
-        run: python3 fly.py
+        run: |
+          # Check if the app exists
+          FLY_APP_EXISTS=$(flyctl apps list | grep ${{ env.FLY_IO_APP_NAME }} | wc -l)
+
+          # If the app does not exist, create it
+          if [ $FLY_APP_EXISTS -eq 0 ]; then
+            flyctl apps create ${{ env.FLY_IO_APP_NAME }} --org ${{ env.FLY_IO_ORG }} --region ${{ env.FLY_IO_APP_REGION }}
+          fi
+
+          # If the app exists, update it
+          if [ $FLY_APP_EXISTS -eq 1 ]; then
+            flyctl apps update ${{ env.FLY_IO_APP_NAME }} --org ${{ env.FLY_IO_ORG }} --region ${{ env.FLY_IO_APP_REGION }}
+          fi
         working-directory: "${{ env.repo_path }}/app"
       - name: Set Up Terraform
         uses: hashicorp/setup-terraform@v3
