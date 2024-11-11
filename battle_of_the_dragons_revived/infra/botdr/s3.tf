@@ -52,6 +52,14 @@ resource "aws_s3_bucket_public_access_block" "mod_bucket_acc_blk" {
   block_public_policy     = true
 }
 
+resource "aws_s3_bucket_versioning" "mod_bucket_versioning" {
+  bucket = aws_s3_bucket.mod_bucket.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
 resource "aws_s3_bucket_lifecycle_configuration" "mod_bucket_lifecycle" {
   bucket = aws_s3_bucket.mod_bucket.id
 
