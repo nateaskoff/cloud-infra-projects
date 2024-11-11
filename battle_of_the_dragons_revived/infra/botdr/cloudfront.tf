@@ -4,7 +4,7 @@ resource "aws_cloudfront_distribution" "cf_dist_botdr_web" {
   #checkov:skip=CKV_AWS_310
   #checkov:skip=CKV_AWS_86
   origin {
-    domain_name              = aws_s3_bucket.botdr_web.bucket_regional_domain_name
+    domain_name              = aws_s3_bucket.web_bucket.bucket_regional_domain_name
     origin_access_control_id = aws_cloudfront_origin_access_control.default.id
     origin_id                = "${var.env}-botdr-web-s3-oid"
   }

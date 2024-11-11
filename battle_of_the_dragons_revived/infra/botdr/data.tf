@@ -26,7 +26,7 @@ data "aws_iam_policy_document" "s3_web_bucket_policy" {
       test     = "StringEquals"
       variable = "aws:SourceArn"
       values = [
-        "arn:aws:cloudfront::${data.aws_caller_identity.current.account_id}:distribution/${aws_cloudfront_distribution.primary_site_cf_dist.id}"
+        "arn:aws:cloudfront::${data.aws_caller_identity.current.account_id}:distribution/${aws_cloudfront_distribution.cf_dist_botdr_web.id}"
       ]
     }
   }
