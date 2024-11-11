@@ -91,6 +91,7 @@ jobs:
       - name: Output Web Identity Token to Credential File
         run: |
           curl -s -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" | jq -r '.value' > /tmp/aws-oidc-credentials
+          cat /tmp/aws-oidc-credentials
       - name: Set Up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
