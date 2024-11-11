@@ -1,3 +1,4 @@
+#checkov:skip=CKV_DOCKER_2:no way to do health check with nwserver
 FROM i386/debian:stretch-slim
 
 # Install dependencies
