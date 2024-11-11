@@ -9,9 +9,8 @@ set -e
 : "${AWS_SESSION_NAME:?Environment variable AWS_SESSION_NAME is required}"
 : "${AWS_WEB_IDENTITY_TOKEN_URL:?Environment variable AWS_WEB_IDENTITY_TOKEN_URL is required}"
 
-# Get the Web Identity Token from GitHub Actions (already available in $GITHUB_TOKEN)
-# GitHub automatically injects the OIDC token as a web identity token for the actions.
-WEB_IDENTITY_TOKEN=$(cat /proc/self/environ | grep -z 'GITHUB_TOKEN=' | sed 's/^.*GITHUB_TOKEN=//g' | tr -d '\0')
+# Get the Web Identity Token from GitHub Actions OIDC (it's available automatically)
+WEB_IDENTITY_TOKEN=$(curl -sL "$AWS_WEB_IDENTITY_TOKEN_URL/.well-known/openid-configuration" | jq -r .issuer)
 
 # Check if the token is fetched successfully
 if [ -z "$WEB_IDENTITY_TOKEN" ]; then
