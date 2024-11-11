@@ -29,6 +29,9 @@ RUN wget -O /tmp/nwserver-linux.zip https://nwn.beamdog.net/downloads/nwnee-dedi
 # Unzip the downloaded file to /nwserver
 RUN unzip /tmp/nwserver-linux.zip -d /nwserver
 
+# Delete the downloaded file
+RUN rm /tmp/nwserver-linux.zip
+
 # Set nwserver-linux to mode a+x for nwserver-user
 RUN chmod a+x /nwserver/bin/linux-x86/nwserver-linux
 
@@ -44,4 +47,4 @@ COPY supervisord.conf /etc/supervisor/supervisord.conf
 # copy nw_server.py to /nwserver
 COPY nw_server.py /nwserver/nw_server.py
 
-CMD ["python3", "nw_server.py"]
+CMD ["python3", "/nwserver/nw_server.py"]
