@@ -52,7 +52,7 @@ resource "aws_s3_bucket_public_access_block" "mod_bucket_acc_blk" {
   block_public_policy     = true
 }
 
-resource "aws_s3_bucket_lifecycle_configuration" "web_bucket_lifecycle" {
+resource "aws_s3_bucket_lifecycle_configuration" "mod_bucket_lifecycle" {
   bucket = aws_s3_bucket.mod_bucket.id
 
   rule {
@@ -74,7 +74,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "web_bucket_lifecycle" {
   }
 }
 
-resource "aws_s3_bucket_server_side_encryption_configuration" "web_bucket_sse" {
+resource "aws_s3_bucket_server_side_encryption_configuration" "mod_bucket_sse" {
   bucket = aws_s3_bucket.mod_bucket.id
 
   rule {

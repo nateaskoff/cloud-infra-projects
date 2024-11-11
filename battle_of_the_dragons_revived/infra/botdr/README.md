@@ -35,11 +35,12 @@ No modules.
 | [aws_route53_record.web_cert_val_record](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/resources/route53_record) | resource |
 | [aws_s3_bucket.mod_bucket](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/resources/s3_bucket) | resource |
 | [aws_s3_bucket.web_bucket](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/resources/s3_bucket) | resource |
+| [aws_s3_bucket_lifecycle_configuration.mod_bucket_lifecycle](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/resources/s3_bucket_lifecycle_configuration) | resource |
 | [aws_s3_bucket_lifecycle_configuration.web_bucket_lifecycle](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/resources/s3_bucket_lifecycle_configuration) | resource |
 | [aws_s3_bucket_policy.web_bucket_policy](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/resources/s3_bucket_policy) | resource |
 | [aws_s3_bucket_public_access_block.mod_bucket_acc_blk](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/resources/s3_bucket_public_access_block) | resource |
 | [aws_s3_bucket_public_access_block.web_bucket_acc_blk](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/resources/s3_bucket_public_access_block) | resource |
-| [aws_s3_bucket_server_side_encryption_configuration.web_bucket_sse](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/resources/s3_bucket_server_side_encryption_configuration) | resource |
+| [aws_s3_bucket_server_side_encryption_configuration.mod_bucket_sse](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/resources/s3_bucket_server_side_encryption_configuration) | resource |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/data-sources/caller_identity) | data source |
 | [aws_iam_policy_document.botdr_fly_io_user_policy_doc](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.s3_web_bucket_policy](https://registry.terraform.io/providers/hashicorp/aws/5.75.0/docs/data-sources/iam_policy_document) | data source |
