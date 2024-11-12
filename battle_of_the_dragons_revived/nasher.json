@@ -1,0 +1,10 @@
+{
+  "src": "mod/src",
+  "dest": "mod/build",
+  "erf": {
+    "clean": true
+  },
+  "mod": {
+    "clean": true
+  }
+}

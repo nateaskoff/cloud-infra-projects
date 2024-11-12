@@ -9,6 +9,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
 # Get env vars
+app_env = os.getenv("APP_ENV")
 aws_region = os.getenv("AWS_REGION")
 aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
 aws_secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY")
@@ -29,7 +30,7 @@ def start_supervisor():
     try:
         # Start the supervisor service
         logger.info("Starting supervisor service...")
-        subprocess.run(["sudo", "supervisord", "-c", "/etc/supervisor/supervisord.conf"])
+        subprocess.run(["supervisord", "-c", "/etc/supervisor/supervisord.conf"])
         logger.info("Supervisor service started")
     except Exception as e:
         logger.error(f"Error starting supervisor service: {e}")

@@ -221,6 +221,7 @@ jobs:
             --vm-memory ${{ env.FLY_IO_MEMORY }} \
             --dockerfile ${{ env.FLY_IO_DOCKERFILE_PATH }} \
             --volume-initial-size ${{ env.FLY_IO_VOLUME_INIT_SIZE }} \
+            --env "APP_ENV=${{ env.TF_VAR_env }}" \
             --env "AWS_S3_MOD_BUCKET_ID=${{ env.AWS_S3_MOD_BUCKET_ID }}" \
             --env "AWS_REGION=${{ env.FLY_IO_APP_AWS_REGION }}" \
             --ha=false

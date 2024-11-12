@@ -1,5 +1,4 @@
 # We can work on the module file locally, and it will be copied up to Gitlab via a pre-commit webhook. The module file must be in the root of the directory
-*Battle Of The Dragons Revived.mod*
 server*
 .local*
 local_notes.txt
@@ -40,3 +39,12 @@ terraform.rc
 # Ignore react build and node_modules
 *node_modules/*
 *build/*
+
+# Nasher - Ignore packed files
+*.erf
+*.hak
+*.mod
+*.tlk
+
+# Ignore the nasher directory
+*.nasher/*
