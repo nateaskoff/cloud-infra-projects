@@ -2,6 +2,10 @@
   NWN_VERSION = "8152"
   NWN_ARCH = "linux-x86"
 
+[[volumes]]
+  name="nwn-data"
+  size_gb = 10
+
 [[services]]
   internal_port = 5121
   protocol = "udp"
