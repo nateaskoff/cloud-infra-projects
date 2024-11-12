@@ -13,6 +13,8 @@ aws_region = os.getenv("AWS_REGION")
 aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
 aws_secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY")
 mod_s3_bucket = os.getenv("AWS_S3_MOD_BUCKET_ID")
+mod_s3_key = "Battle Of The Dragons Revived.mod"
+mod_default_location = "/home/nwserver-user/.local/share/Neverwinter Nights/modules/Battle Of The Dragons Revived.mod"
 
 # Set up s3 client
 s3 = boto3.client(
@@ -32,19 +34,19 @@ def start_supervisor():
     except Exception as e:
         logger.error(f"Error starting supervisor service: {e}")
 
-# Test s3 connection
-def test_s3_connection():
+# Download nwn modules from s3 to user directory location
+def download_mod_from_s3():
     try:
-        # Test s3 connection
-        logger.info("Testing s3 connection...")
-        s3.list_buckets()
-        logger.info("S3 connection successful")
+        # Download mod from s3
+        logger.info(f"Downloading mod from s3 bucket: {mod_s3_bucket}")
+        s3.download_file(mod_s3_bucket, mod_s3_key, mod_default_location)
+        logger.info("Mod downloaded successfully")
     except ClientError as e:
-        logger.error(f"Error testing s3 connection: {e}")
+        logger.error(f"Error downloading mod from s3: {e}")
 
 if __name__ == "__main__":
-    # Test s3 connection
-    test_s3_connection()
+    # Download mod from s3
+    download_mod_from_s3()
 
     # Start supervisor
     start_supervisor()
