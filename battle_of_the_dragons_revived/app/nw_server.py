@@ -14,8 +14,8 @@ aws_region = os.getenv("AWS_REGION")
 aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
 aws_secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY")
 mod_s3_bucket = os.getenv("AWS_S3_MOD_BUCKET_ID")
-mod_s3_key = "Battle Of The Dragons Revived.mod"
-mod_default_location = "/home/nwserver-user/.local/share/Neverwinter Nights/modules/Battle Of The Dragons Revived.mod"
+mod_s3_key = "Battle_Of_The_Dragons_Revived.mod"
+mod_default_location = "/home/nwserver-user/.local/share/Neverwinter Nights/modules/Battle_Of_The_Dragons_Revived.mod"
 
 # Set up s3 client
 s3 = boto3.client(
