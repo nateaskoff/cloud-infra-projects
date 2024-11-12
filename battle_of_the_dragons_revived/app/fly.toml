@@ -6,6 +6,10 @@
   name="nwn-data"
   size_gb = 10
 
+[[mounts]]
+  source="nwn-data"
+  destination="/nwn_data"
+
 [[services]]
   internal_port = 5121
   protocol = "udp"
@@ -25,3 +29,6 @@
 
 [deploy]
   strategy = "rolling"
+
+[[restart]]
+  policy = "never"
