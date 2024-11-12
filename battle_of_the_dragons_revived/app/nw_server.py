@@ -29,7 +29,7 @@ def start_supervisor():
     try:
         # Start the supervisor service
         logger.info("Starting supervisor service...")
-        subprocess.run(["supervisord", "-c", "/etc/supervisor/supervisord.conf"])
+        subprocess.run(["sudo", "supervisord", "-c", "/etc/supervisor/supervisord.conf"])
         logger.info("Supervisor service started")
     except Exception as e:
         logger.error(f"Error starting supervisor service: {e}")
