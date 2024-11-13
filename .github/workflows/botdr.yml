@@ -107,8 +107,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       APP_NAME: "dev-botdr"
-      DOCKER_REGISTRY: "registry.fly.io/personal-containers"
-      DOCKER_TAGS: "botdr:latest"
+      DOCKER_REGISTRY: "registry.fly.io"
+      DOCKER_TAGS: "latest"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -123,7 +123,7 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64 \
             --push \
-            --tag "${{ env.DOCKER_REGISTRY }}/${{ env.APP_NAME }}/${{ env.DOCKER_TAGS }}" \
+            --tag "${{ env.DOCKER_REGISTRY }}/${{ env.APP_NAME }}:${{ env.DOCKER_TAGS }}" \
             .
         working-directory: "${{ env.repo_path }}/app"
 
