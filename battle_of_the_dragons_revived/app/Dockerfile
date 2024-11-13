@@ -1,9 +1,9 @@
 #checkov:skip=CKV_DOCKER_2:no way to do health check with nwserver
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 # Install dependencies
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y libc6-i386 libstdc++6-i386-cross wget unzip supervisor python3 python3-pip
+RUN apt-get install -y wget unzip supervisor python3 python3-pip
 
 # Install python requirements
 COPY requirements.txt /tmp/requirements.txt
