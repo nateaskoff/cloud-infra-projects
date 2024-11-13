@@ -69,14 +69,14 @@ app_config = {
                 "min_machines_running": 1
             }
         ],
-        "mounts": [
-            {
-                "volume": "nwn-data",
-                "path": "/nwnserver",
-                "name": "nwn-data",
-                "size_gb_limit": 10
-            }
-        ],
+        #"mounts": [
+        #    {
+        #        "volume": "nwn-data",
+        #        "path": "/nwnserver",
+        #        "name": "nwn-data",
+        #        "size_gb_limit": 10
+        #    }
+        #],
         "regions": [
             "iad",
             "ord"
