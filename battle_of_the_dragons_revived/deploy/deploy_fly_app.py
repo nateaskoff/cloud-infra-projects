@@ -15,7 +15,9 @@ fly_api_token = os.getenv("FLY_IO_API_TOKEN")
 
 # Get env vars
 app_name = os.getenv("FLY_IO_APP_NAME")
-app_env = os.getenv("FLY_IO_APP_ENV")
+app_env = os.getenv("TF_VAR_env")
+aws_s3_mod_bucket_id = os.getenv("AWS_S3_MOD_BUCKET_ID")
+aws_region = os.getenv("FLY_IO_APP_AWS_REGION")
 
 # define files to copy to container
 app_files = [
@@ -82,6 +84,17 @@ app_config = {
     }
 }
 
+app_secrets = [
+    {
+        "name": "AWS_ACCESS_KEY_ID",
+        "value": os.getenv("AWS_ACCESS_KEY_ID")
+    },
+    {
+        "name": "AWS_SECRET_ACCESS_KEY",
+        "value": os.getenv("AWS_SECRET_ACCESS_KEY")
+    }
+]
+
 def deploy_fly_io():
     deploy_fly_app(
         fly_api_endpoint=fly_api_endpoint,
@@ -89,9 +102,20 @@ def deploy_fly_io():
         app_name=app_name
     )
 
+    # set secrets
+    for secret in app_secrets:
+        set_fly_app_secret(
+            app_name=app_name,
+            secret_name=secret["name"],
+            secret_value=secret["value"]
+        )
+
     deploy_fly_machine(
         fly_api_endpoint=fly_api_endpoint,
         fly_api_token=fly_api_token,
         app_name=app_name,
         app_config=app_config
     )
+
+if __name__ == "__main__":
+    deploy_fly_io()

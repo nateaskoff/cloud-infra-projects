@@ -11,6 +11,7 @@ def deploy_fly_app(
     fly_api_token: str,
     app_name: str
     ):
+    logger.info("Deploying app: %s", app_name)
     # define api url and headers
     url = f"{fly_api_endpoint}/api/v1/apps"
     headers = {
@@ -22,6 +23,7 @@ def deploy_fly_app(
     fly_app = None
     try:
         fly_app = requests.get(f"{url}/{app_name}", headers=headers, timeout=10).json()
+        logger.info("App exists: %s", fly_app)
     except HTTPError as e:
         if e.response.status_code == 404:
             logger.info("App does not exist")
@@ -31,6 +33,7 @@ def deploy_fly_app(
 
     # if does not exist, create app
     if fly_app is None:
+        logger.info("Creating app: %s", app_name)
         try:
             fly_create_app_response = requests.post(
                 url,
@@ -48,4 +51,5 @@ def deploy_fly_app(
         fly_app = fly_create_app_response.json()
 
     # return app id
+    logger.info("App id: %s", fly_app["id"])
     return fly_app["id"]
