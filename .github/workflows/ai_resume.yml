@@ -1,0 +1,112 @@
+name: AI Resume
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/ai_resume.yml"
+      - "ai_resume/**"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/ai_resume.yml"
+      - "ai_resume/**"
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  repo_path: "ai_resume"
+  node_version: "20.x"
+  python_version: "3.12"
+  terraform_version: "1.9.8"
+
+jobs:
+  security-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.python_version }}
+      - name: Set Up Checkov
+        run: pip install checkov
+      - name: Run Checkov
+        run: checkov -d ${{ env.repo_path }} --quiet
+
+  cost-estimation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set Up Infracost
+        uses: infracost/actions/setup@v3
+        with:
+          api-key: ${{ secrets.INFRACOST_API_TOKEN }}
+      - name: Run Infracost
+        run: infracost breakdown --path ${{ env.repo_path }}
+
+  build-and-test-yarn:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.node_version }}
+      - name: Install Yarn
+        run: npm install -g yarn
+      - name: Build Env Bundle
+        run: yarn install
+        working-directory: "${{ env.repo_path }}/web"
+      - name: Run Unit Tests
+        run: yarn test --detectOpenHandles
+        working-directory: "${{ env.repo_path }}/web"
+      - name: Run Yarn Build
+        run: yarn build
+        working-directory: "${{ env.repo_path }}/web"
+
+  terraform-plan:
+    runs-on: ubuntu-latest
+    env:
+      TF_WORKSPACE: "dev-botdr"
+      TF_VAR_env: "dev"
+      TF_VAR_az_location: "East US"
+      TF_BACKEND_CONFIG_RG_NAME: "cloud-infra-projects-tf-state"
+      TF_BACKEND_CONFIG_STORAGE_ACCOUNT_NAME: "cloud-infra-projects-tf-state"
+      TF_BACKEND_CONFIG_CONTAINER_NAME: "tfstate"
+      TF_BACKEND_CONFIG_KEY: "dev/ai_resume/terraform.tfstate"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup OIDC Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Set Up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.terraform_version }}
+      - name: Terraform Init
+        run: |
+          terraform init \
+            -backend-config="resource_group_name=${{ env.TF_BACKEND_CONFIG_RG_NAME }}" \
+            -backend-config="storage_account_name=${{ env.TF_BACKEND_CONFIG_STORAGE_ACCOUNT_NAME }}" \
+            -backend-config="container_name=${{ env.TF_BACKEND_CONFIG_CONTAINER_NAME }}" \
+            -backend-config="key=${{ env.TF_BACKEND_CONFIG_KEY }}"
+        working-directory: "${{ env.repo_path }}/infra"
+      - name: Terraform Validate
+        run: terraform validate
+        working-directory: "${{ env.repo_path }}/infra"
+      - name: Terraform Plan
+        run: terraform plan
+        working-directory: "${{ env.repo_path }}/infra"
