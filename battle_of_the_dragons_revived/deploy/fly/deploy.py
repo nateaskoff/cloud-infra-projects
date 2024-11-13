@@ -34,7 +34,7 @@ def deploy_fly_machine(
         fly_create_machine_response.raise_for_status()  # Raises HTTPError for bad responses
         logger.info("Machine created successfully: %s", fly_create_machine_response.json())
     except RequestException as e:
-        logger.error("Error creating machine: %s", e)
+        logger.error("Error creating machine: %s, %s", e, fly_create_machine_response.text)
         return None
 
     # Parse and return the machine ID
