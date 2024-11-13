@@ -193,4 +193,4 @@ jobs:
         run: pip3 install -r ./.ci_cd/scripts/requirements.txt
       - name: Run Fly.io Deployment
         run: python3 deploy_fly_app.py
-        working-directory: "${{ env.repo_path }}/.ci_cd/scripts"
+        working-directory: "./.ci_cd/scripts"
