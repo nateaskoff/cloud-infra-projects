@@ -103,6 +103,8 @@ jobs:
             -backend-config="oidc_request_token=$ACTIONS_ID_TOKEN_REQUEST_TOKEN"
             -backend-config="oidc_request_url=$ACTIONS_ID_TOKEN_REQUEST_URL"
             -backend-config="use_oidc=true"
+            -backend-config="use_msi=false"
+            -backend-config="use_cli=false"
         working-directory: "${{ env.repo_path }}/infra"
       - name: Terraform Validate
         run: terraform validate
