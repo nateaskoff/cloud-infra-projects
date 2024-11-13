@@ -45,6 +45,7 @@ def deploy_fly_app(
                 timeout=10,
             )
             fly_create_app_response.raise_for_status()
+            logger.info("App created successfully: %s", fly_create_app_response)
             fly_create_app = json.loads(fly_create_app_response.content)
             logger.info("App created successfully")
         except HTTPError as e:
