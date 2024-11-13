@@ -5,10 +5,12 @@ import os
 logger = logging.getLogger()
 
 # Function to get a secret for a Fly.io app
-def get_fly_app_secrets():
+def get_fly_app_secrets(
+    app_name: str
+    ):
     try:
         # Run the flyctl command to get the secret with the app name specified
-        fly_secrets = os.system("flyctl secrets list")
+        fly_secrets = os.system(f"flyctl secrets list --app {app_name}")
         logger.info(f"Secrets: {fly_secrets}")
     except Exception as e:
         logger.error(f"Error getting secrets: {e}")

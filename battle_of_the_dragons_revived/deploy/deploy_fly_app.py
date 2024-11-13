@@ -108,7 +108,7 @@ def deploy_fly_io():
     # set secrets
     for secret in app_secrets:
         # get the secret
-        secrets_output = get_fly_app_secrets()
+        secrets_output = get_fly_app_secrets(app_name=app_name)
 
         # regex to find secret
         secret_regex = re.compile(f"{secret['name']}=(.*)")
