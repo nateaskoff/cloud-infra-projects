@@ -12,6 +12,7 @@ def get_fly_app_secret(app_name: str, secret_name: str):
         # Run the flyctl command to get the secret
         command = ["flyctl", "secrets", "get", secret_name]
         result = subprocess.run(command, capture_output=True, text=True, check=True)
+        logger.info(f"Command output: {result.stdout}")
 
         # Search for the secret value in the command output
         match = re.search(rf"{secret_name}:\s+(.*)", result.stdout)
