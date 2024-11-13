@@ -20,29 +20,6 @@ app_env = os.getenv("TF_VAR_env")
 aws_s3_mod_bucket_id = os.getenv("AWS_S3_MOD_BUCKET_ID")
 aws_region = os.getenv("FLY_IO_APP_AWS_REGION")
 
-# Define files to copy to the container
-app_files = [
-    {
-        "src": "../app/nw_server.py",
-        "dest": "/app/nw_server.py"
-    },
-    {
-        "src": "../app/supervisord.conf",
-        "dest": "/etc/supervisor/supervisord.conf"
-    }
-]
-
-app_files_config = []
-
-for file in app_files:
-    # Generate file object
-    file_obj = generate_fly_io_file_obj(
-        file_path=file["src"],
-        guest_path=file["dest"]
-    )
-    # Append to files config
-    app_files_config.append(file_obj)
-
 # Define config values for the app
 app_config = {
     "config": {
@@ -85,7 +62,6 @@ app_config = {
         "env": {
             "APP_ENV": app_env
         },
-        "files": app_files_config,
         "size": "shared-cpu-1x",
         "restart": {
             "policy": "no"
