@@ -113,7 +113,7 @@ def deploy_fly_io():
         )
 
         # if secret does not exist, set it
-        if not secret_value:
+        if not secret_value or secret_value == None:
             set_fly_app_secret(
                 app_name=app_name,
                 secret_name=secret["name"],
