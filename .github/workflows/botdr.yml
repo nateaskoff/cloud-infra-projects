@@ -125,7 +125,7 @@ jobs:
         run: |
           docker buildx build \
             --push \
-            --tag "${{ env.DOCKER_REGISTRY }}/personal-containers/${{ env.APP_NAME }}:${{ github.sha }}" \
+            --tag "${{ env.DOCKER_REGISTRY }}/personal/${{ env.APP_NAME }}:${{ github.sha }}" \
             .
         working-directory: "${{ env.repo_path }}/app"
 
