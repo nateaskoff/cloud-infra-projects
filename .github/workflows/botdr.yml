@@ -105,6 +105,8 @@ jobs:
 
   docker-build-push:
     runs-on: ubuntu-latest
+    concurrency:
+      group: dev-botdr-docker-push
     env:
       APP_NAME: "dev-botdr"
       DOCKER_REGISTRY: "registry.fly.io"
@@ -123,7 +125,7 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64 \
             --push \
-            --tag "${{ env.DOCKER_REGISTRY }}/${{ env.APP_NAME }}:${{ env.DOCKER_TAGS }}" \
+            --tag "${{ env.DOCKER_REGISTRY }}/${{ env.APP_NAME }}:${{ env.APP_NAME }}-${{ env.DOCKER_TAGS }}" \
             .
         working-directory: "${{ env.repo_path }}/app"
 
