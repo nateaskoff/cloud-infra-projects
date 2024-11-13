@@ -1,5 +1,5 @@
 #checkov:skip=CKV_DOCKER_2:no way to do health check with nwserver
-FROM ubuntu:22.04
+FROM ubuntu:20.04
 
 # Install dependencies
 RUN apt-get update && apt-get upgrade -y
