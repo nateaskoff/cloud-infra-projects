@@ -86,12 +86,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Setup OIDC Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Set Up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
@@ -108,6 +102,7 @@ jobs:
             -backend-config="client_id=${{ secrets.AZURE_CLIENT_ID }}"
             -backend-config="oidc_request_token=$ACTIONS_ID_TOKEN_REQUEST_TOKEN"
             -backend-config="oidc_request_url=$ACTIONS_ID_TOKEN_REQUEST_URL"
+            -backend-config="use_oidc=true"
         working-directory: "${{ env.repo_path }}/infra"
       - name: Terraform Validate
         run: terraform validate
