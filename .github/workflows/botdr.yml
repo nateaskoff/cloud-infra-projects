@@ -192,4 +192,5 @@ jobs:
       - name: Install CI/CD Dependencies
         run: pip3 install -r ./.ci_cd/scripts/requirements.txt
       - name: Run Fly.io Deployment
-        run: python3 ./.ci_cd/scripts/deploy_fly_app.py
+        run: python3 deploy_fly_app.py
+        working-directory: "${{ env.repo_path }}/.ci_cd/scripts"
