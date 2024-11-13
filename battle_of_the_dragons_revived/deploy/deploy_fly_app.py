@@ -2,7 +2,7 @@ import logging
 import os
 from fly.app import deploy_fly_app
 from fly.deploy import deploy_fly_machine
-from fly.secrets import set_fly_app_secret
+from fly.secrets import get_fly_app_secret, set_fly_app_secret
 from fly.utils import generate_fly_io_file_obj
 
 # Set up logging
@@ -106,11 +106,19 @@ def deploy_fly_io():
 
     # set secrets
     for secret in app_secrets:
-        set_fly_app_secret(
+        # get the secret
+        secret_value = get_fly_app_secret(
             app_name=app_name,
-            secret_name=secret["name"],
-            secret_value=secret["value"]
+            secret_name=secret["name"]
         )
+
+        # if secret does not exist, set it
+        if not secret_value:
+            set_fly_app_secret(
+                app_name=app_name,
+                secret_name=secret["name"],
+                secret_value=secret["value"]
+            )
 
     deploy_fly_machine(
         fly_api_endpoint=fly_api_endpoint,
