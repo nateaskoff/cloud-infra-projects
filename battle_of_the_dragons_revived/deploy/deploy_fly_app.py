@@ -112,6 +112,7 @@ def deploy_fly_io():
         # go through list of secrets in output and continue if secret exists
         for secret_name in secrets_output:
             if secret["Name"] == secret_name:
+                logger.info(f"Secret {secret_name} already exists")
                 continue
             else:
                 set_fly_app_secret(
