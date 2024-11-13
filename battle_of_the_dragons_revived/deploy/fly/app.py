@@ -25,14 +25,16 @@ def deploy_fly_app(
     try:
         fly_app_response = requests.get(f"{url}/{app_name}", headers=headers, timeout=10)
         logger.info("App response: %s", fly_app_response)
-        fly_app = json.loads(fly_app_response.content)
-        logger.info("App exists: %s", fly_app)
     except HTTPError as e:
         if e.response.status_code == 404:
             logger.info("App does not exist")
         else:
             logger.error("Error getting app: %s", e)
             return
+
+    if fly_app_response.status_code == 200:
+        fly_app = json.loads(fly_app_response.content)
+        logger.info("App exists: %s", fly_app)
 
     # if does not exist, create app
     if fly_app is None:
