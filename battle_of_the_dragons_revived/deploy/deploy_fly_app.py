@@ -9,18 +9,18 @@ from fly.utils import generate_fly_io_file_obj
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
-# default vars
+# Default variables
 fly_api_endpoint = "https://api.machines.dev"
 fly_org_slug = "Personal"
 fly_api_token = os.getenv("FLY_IO_API_TOKEN")
 
-# Get env vars
+# Get environment variables
 app_name = os.getenv("FLY_IO_APP_NAME")
 app_env = os.getenv("TF_VAR_env")
 aws_s3_mod_bucket_id = os.getenv("AWS_S3_MOD_BUCKET_ID")
 aws_region = os.getenv("FLY_IO_APP_AWS_REGION")
 
-# define files to copy to container
+# Define files to copy to the container
 app_files = [
     {
         "src": "../app/nw_server.py",
@@ -35,16 +35,15 @@ app_files = [
 app_files_config = []
 
 for file in app_files:
-    # generate file object
+    # Generate file object
     file_obj = generate_fly_io_file_obj(
         file_path=file["src"],
         guest_path=file["dest"]
     )
-
-    # append to files config
+    # Append to files config
     app_files_config.append(file_obj)
 
-# define config values for app
+# Define config values for the app
 app_config = {
     "image": "docker.io/library/ubuntu:22.04",
     "init": {
@@ -97,6 +96,7 @@ app_secrets = [
 ]
 
 def deploy_fly_io():
+    # Deploy the app
     deploy_fly_app(
         fly_api_endpoint=fly_api_endpoint,
         fly_api_token=fly_api_token,
@@ -104,23 +104,22 @@ def deploy_fly_io():
         org_slug=fly_org_slug
     )
 
-    # set secrets
+    # Retrieve existing secrets
+    existing_secrets = get_fly_app_secrets(app_name=app_name)
+    existing_secret_names = {secret["Name"] for secret in existing_secrets}  # Extract existing secret names
+
+    # Set secrets if they don't already exist
     for secret in app_secrets:
-        # get the secret
-        secrets_output = get_fly_app_secrets(app_name=app_name)
+        if secret["name"] in existing_secret_names:
+            logger.info(f"Secret '{secret['name']}' already exists")
+        else:
+            set_fly_app_secret(
+                app_name=app_name,
+                secret_name=secret["name"],
+                secret_value=secret["value"]
+            )
 
-        # go through list of secrets in output and continue if secret exists
-        for secret_name in secrets_output:
-            if secret["Name"] == secret_name:
-                logger.info(f"Secret {secret_name} already exists")
-                continue
-            else:
-                set_fly_app_secret(
-                    app_name=app_name,
-                    secret_name=secret["name"],
-                    secret_value=secret["value"]
-                )
-
+    # Deploy the Fly.io machine
     deploy_fly_machine(
         fly_api_endpoint=fly_api_endpoint,
         fly_api_token=fly_api_token,
