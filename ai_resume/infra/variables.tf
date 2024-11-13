@@ -23,26 +23,6 @@ variable "client_id" {
   type        = string
 }
 
-variable "resource_group_name" {
-  description = "The Azure resource group name"
-  type        = string
-}
-
-variable "storage_account_name" {
-  description = "The Azure storage account name"
-  type        = string
-}
-
-variable "container_name" {
-  description = "The Azure storage container name"
-  type        = string
-}
-
-variable "state_key" {
-  description = "The Azure storage state key"
-  type        = string
-}
-
 variable "github_oidc_request_token" {
   description = "The GitHub OIDC request token"
   type        = string
