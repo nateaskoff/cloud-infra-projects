@@ -49,7 +49,7 @@ app_config = {
         "image": "docker.io/library/ubuntu:22.04",
         "init": {
             "exec": [
-                "/usr/bin/python3",
+                "python3",
                 "/app/nw_server.py"
             ]
         },
