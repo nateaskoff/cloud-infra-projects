@@ -106,6 +106,7 @@ jobs:
   docker-build-push:
     runs-on: ubuntu-latest
     env:
+      APP_NAME: "dev-botdr"
       DOCKER_REGISTRY: "https://registry.fly.io/Personal"
       DOCKER_TAGS: "botdr:latest"
     steps:
@@ -115,14 +116,14 @@ jobs:
         uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Set Up Docker
         uses: docker/setup-buildx-action@v3
-      - name: Log Into Github Container Registry
+      - name: Log Into Fly.io Docker Registry
         run: flyctl auth docker --access-token ${{ secrets.FLY_IO_API_TOKEN }}
       - name: Build and Push Docker Image
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64 \
             --push \
-            --tag ${{ env.DOCKER_REGISTRY }}-${{ env.DOCKER_TAGS }} \
+            --tag "${{ env.DOCKER_REGISTRY }}/${{ env.APP_NAME }}/${{ env.DOCKER_TAGS }}" \
             .
         working-directory: "${{ env.repo_path }}/app"
 
