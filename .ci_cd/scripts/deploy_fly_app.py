@@ -20,11 +20,11 @@ app_env = os.getenv("FLY_IO_APP_ENV")
 # define files to copy to container
 app_files = [
     {
-        "src": "app/nw_server.py",
+        "src": "../app/nw_server.py",
         "dest": "/app/nw_server.py"
     },
     {
-        "src": "app/supervisord.conf",
+        "src": ".//app/supervisord.conf",
         "dest": "/etc/supervisor/supervisord.conf"
     }
 ]
