@@ -24,7 +24,7 @@ app_files = [
         "dest": "/app/nw_server.py"
     },
     {
-        "src": ".//app/supervisord.conf",
+        "src": "../app/supervisord.conf",
         "dest": "/etc/supervisor/supervisord.conf"
     }
 ]

@@ -190,7 +190,8 @@ jobs:
         run: terraform apply -auto-approve
         working-directory: "${{ env.repo_path }}/infra"
       - name: Install CI/CD Dependencies
-        run: pip3 install -r ./.ci_cd/scripts/requirements.txt
+        run: pip3 install -r requirements.txt
+        working-directory: "${{ env.repo_path }}/deploy"
       - name: Run Fly.io Deployment
         run: python3 deploy_fly_app.py
-        working-directory: "./.ci_cd/scripts"
+        working-directory: "${{ env.repo_path }}/deploy"
