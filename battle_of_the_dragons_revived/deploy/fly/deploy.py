@@ -35,6 +35,7 @@ def deploy_fly_machine(
         logger.info("Machine created successfully: %s", fly_create_machine_response.json())
     except RequestException as e:
         logger.error("Error creating machine: %s, %s", e, fly_create_machine_response.text)
+        raise e
 
     # Parse and return the machine ID
     fly_machine = fly_create_machine_response.json()
@@ -45,3 +46,4 @@ def deploy_fly_machine(
         return machine_id
     else:
         logger.error("Machine ID not found in response")
+        raise Exception("Machine ID not found in response")
