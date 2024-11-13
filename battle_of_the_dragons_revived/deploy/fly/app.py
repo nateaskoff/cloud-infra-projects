@@ -1,4 +1,5 @@
 import logging
+import json
 import requests
 from requests.exceptions import HTTPError
 
@@ -22,7 +23,9 @@ def deploy_fly_app(
     # see if app exists
     fly_app = None
     try:
-        fly_app = requests.get(f"{url}/{app_name}", headers=headers, timeout=10).json()
+        fly_app_response = requests.get(f"{url}/{app_name}", headers=headers, timeout=10)
+        logger.info("App response: %s", fly_app_response)
+        fly_app = json.loads(fly_app_response.content)
         logger.info("App exists: %s", fly_app)
     except HTTPError as e:
         if e.response.status_code == 404:
@@ -42,13 +45,14 @@ def deploy_fly_app(
                 timeout=10,
             )
             fly_create_app_response.raise_for_status()
+            fly_create_app = json.loads(fly_create_app_response.content)
             logger.info("App created successfully")
         except HTTPError as e:
             logger.error("Error creating app: %s", e)
             return
 
         # get app id
-        fly_app = fly_create_app_response.json()
+        fly_app = fly_create_app
 
     # return app id
     logger.info("App id: %s", fly_app["id"])
