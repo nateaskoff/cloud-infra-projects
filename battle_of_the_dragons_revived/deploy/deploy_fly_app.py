@@ -115,7 +115,7 @@ def deploy_fly_io():
 
     # Retrieve existing secrets
     existing_secrets = get_fly_app_secrets(app_name=app_name)
-    existing_secret_names = {secret["Name"] for secret in existing_secrets}  # Extract existing secret names
+    existing_secret_names = {secret["Name"] for secret in existing_secrets}
 
     # Set secrets if they don't already exist
     for secret in app_secrets:
