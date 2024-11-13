@@ -1,5 +1,6 @@
 import logging
 import os
+import subprocess
 import json
 
 # Set up logging
@@ -11,7 +12,7 @@ def get_fly_app_secrets(
     ):
     try:
         # Run the flyctl command to get the secret with the app name specified
-        fly_secrets = json.loads(os.system(f"flyctl secrets list --app {app_name} --json"))
+        fly_secrets = json.loads(subprocess.check_output(f"flyctl secrets list --app {app_name} --json", shell=True))
         logger.info(f"Secrets: {fly_secrets}")
     except Exception as e:
         logger.error(f"Error getting secrets: {e}")
