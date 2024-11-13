@@ -11,6 +11,7 @@ logger = logging.getLogger()
 
 # default vars
 fly_api_endpoint = "https://api.machines.dev"
+fly_org_slug = "Personal"
 fly_api_token = os.getenv("FLY_IO_API_TOKEN")
 
 # Get env vars
@@ -99,7 +100,8 @@ def deploy_fly_io():
     deploy_fly_app(
         fly_api_endpoint=fly_api_endpoint,
         fly_api_token=fly_api_token,
-        app_name=app_name
+        app_name=app_name,
+        org_slug=fly_org_slug
     )
 
     # set secrets
