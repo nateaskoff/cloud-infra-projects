@@ -10,7 +10,7 @@ logger = logging.getLogger()
 def get_fly_app_secret(app_name: str, secret_name: str):
     try:
         # Run the flyctl command to get the secret
-        command = ["flyctl", "secrets", "get", secret_name, "-a", app_name]
+        command = ["flyctl", "secrets", "get", secret_name]
         result = subprocess.run(command, capture_output=True, text=True, check=True)
 
         # Search for the secret value in the command output
