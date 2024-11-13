@@ -56,9 +56,6 @@ app_config = {
         "services": {
             "protocol": "udp",
             "internal_port": 5121,
-            "ports": {
-                "port": 5121
-            },
             "autostart": True,
             "min_machines_running": 1
         },
