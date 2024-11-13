@@ -88,7 +88,7 @@ app_config = {
         "files": app_files_config,
         "size": "shared-cpu-1x",
         "restart": {
-            "policy": "no-on-failure"
+            "policy": "no"
         }
     }
 }
