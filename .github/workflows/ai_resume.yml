@@ -79,7 +79,6 @@ jobs:
       id-token: write
       contents: read
     env:
-      TF_WORKSPACE: "dev-botdr"
       TF_VAR_env: "dev"
       TF_VAR_az_location: "East US"
       TF_VAR_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
