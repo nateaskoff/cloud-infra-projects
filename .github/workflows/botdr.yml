@@ -125,7 +125,7 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64 \
             --push \
-            --tag "${{ env.DOCKER_REGISTRY }}/${{ env.APP_NAME }}:${{ env.APP_NAME }}-${{ env.DOCKER_TAGS }}" \
+            --tag "${{ env.DOCKER_REGISTRY }}/${{ env.APP_NAME }}:${{ github.sha }}" \
             .
         working-directory: "${{ env.repo_path }}/app"
 
