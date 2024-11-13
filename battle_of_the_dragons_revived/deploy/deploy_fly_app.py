@@ -45,42 +45,44 @@ for file in app_files:
 
 # Define config values for the app
 app_config = {
-    "image": "docker.io/library/ubuntu:22.04",
-    "init": {
-        "exec": [
-            "/usr/bin/python3",
-            "/app/nw_server.py"
-        ]
-    },
-    "services": {
-        "protocol": "udp",
-        "internal_port": 5121,
-        "ports": {
-            "port": 5121
+    "config": {
+        "image": "docker.io/library/ubuntu:22.04",
+        "init": {
+            "exec": [
+                "/usr/bin/python3",
+                "/app/nw_server.py"
+            ]
         },
-        "autostart": True,
-        "min_machines_running": 1
-    },
-    "mounts": [
-        {
-            "volume": "nwn-data",
-            "path": "/nwnserver",
-            "name": "nwn-data",
-            "size_gb_limit": 10
+        "services": {
+            "protocol": "udp",
+            "internal_port": 5121,
+            "ports": {
+                "port": 5121
+            },
+            "autostart": True,
+            "min_machines_running": 1
+        },
+        "mounts": [
+            {
+                "volume": "nwn-data",
+                "path": "/nwnserver",
+                "name": "nwn-data",
+                "size_gb_limit": 10
+            }
+        ],
+        "regions": [
+            "iad",
+            "ord"
+        ],
+        "auto_destroy": True,
+        "env": {
+            "APP_ENV": app_env
+        },
+        "files": app_files_config,
+        "size": "shared-cpu-1x",
+        "restart": {
+            "policy": "never"
         }
-    ],
-    "regions": [
-        "iad",
-        "ord"
-    ],
-    "auto_destroy": True,
-    "env": {
-        "APP_ENV": app_env
-    },
-    "files": app_files_config,
-    "size": "shared-cpu-1x",
-    "restart": {
-        "policy": "never"
     }
 }
 
