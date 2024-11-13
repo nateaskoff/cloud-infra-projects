@@ -124,9 +124,8 @@ jobs:
       - name: Build and Push Docker Image
         run: |
           docker buildx build \
-            --platform linux/amd64,linux/arm64 \
             --push \
-            --tag "${{ env.DOCKER_REGISTRY }}/${{ env.APP_NAME }}:${{ github.sha }}" \
+            --tag "${{ env.DOCKER_REGISTRY }}/personal-containers/${{ env.APP_NAME }}:${{ github.sha }}" \
             .
         working-directory: "${{ env.repo_path }}/app"
 
