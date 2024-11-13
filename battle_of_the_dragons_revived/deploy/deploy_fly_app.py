@@ -61,7 +61,7 @@ app_config = {
                     {
                         "port": 5121,
                         "handlers": [
-                            "udp"
+                            "http"
                         ]
                     }
                 ],
