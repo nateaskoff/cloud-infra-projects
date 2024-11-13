@@ -75,38 +75,36 @@ jobs:
 
   terraform-plan:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     env:
       TF_WORKSPACE: "dev-botdr"
       TF_VAR_env: "dev"
       TF_VAR_az_location: "East US"
-      TF_BACKEND_CONFIG_RG_NAME: "cloud-infra-projects-tf-state"
-      TF_BACKEND_CONFIG_STORAGE_ACCOUNT_NAME: "cloud-infra-projects-tf-state"
-      TF_BACKEND_CONFIG_CONTAINER_NAME: "tfstate"
-      TF_BACKEND_CONFIG_KEY: "dev/ai_resume/terraform.tfstate"
+      TF_VAR_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+      TF_VAR_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      TF_VAR_client_id: ${{ secrets.AZURE_CLIENT_ID }}
+      TF_VAR_resource_group_name: "cloud-infra-projects-tf-state"
+      TF_VAR_storage_account_name: "cloud-infra-projects-tf-state"
+      TF_VAR_container_name: "tfstate"
+      TF_VAR_state_key: "dev/ai_resume/terraform.tfstate"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Set Up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: ${{ env.terraform_version }}
+          terraform_version: "1.9.8"
       - name: Terraform Init
-        run: |
-          terraform init \
-            -backend-config="resource_group_name=${{ env.TF_BACKEND_CONFIG_RG_NAME }}" \
-            -backend-config="storage_account_name=${{ env.TF_BACKEND_CONFIG_STORAGE_ACCOUNT_NAME }}" \
-            -backend-config="container_name=${{ env.TF_BACKEND_CONFIG_CONTAINER_NAME }}" \
-            -backend-config="key=${{ env.TF_BACKEND_CONFIG_KEY }}"
-            -backend-config="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}"
-            -backend-config="tenant_id=${{ secrets.AZURE_TENANT_ID }}"
-            -backend-config="client_id=${{ secrets.AZURE_CLIENT_ID }}"
-            -backend-config="oidc_request_token=$ACTIONS_ID_TOKEN_REQUEST_TOKEN"
-            -backend-config="oidc_request_url=$ACTIONS_ID_TOKEN_REQUEST_URL"
-            -backend-config="use_oidc=true"
+        run: terraform init
         working-directory: "${{ env.repo_path }}/infra"
       - name: Terraform Validate
         run: terraform validate
         working-directory: "${{ env.repo_path }}/infra"
       - name: Terraform Plan
-        run: terraform plan
+        run: |
+          terraform plan \
+            -var "github_oidc_request_token=$ACTIONS_ID_TOKEN_REQUEST_TOKEN"
+            -var "github_oidc_request_url=$ACTIONS_ID_TOKEN_REQUEST_URL"
         working-directory: "${{ env.repo_path }}/infra"
