@@ -107,7 +107,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       APP_NAME: "dev-botdr"
-      DOCKER_REGISTRY: "https://registry.fly.io/Personal"
+      DOCKER_REGISTRY: "registry.fly.io"
       DOCKER_TAGS: "botdr:latest"
     steps:
       - name: Checkout code
