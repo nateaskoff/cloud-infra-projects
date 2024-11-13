@@ -1,8 +1,9 @@
 import logging
 import os
+import re
 from fly.app import deploy_fly_app
 from fly.deploy import deploy_fly_machine
-from fly.secrets import get_fly_app_secret, set_fly_app_secret
+from fly.secrets import get_fly_app_secrets, set_fly_app_secret
 from fly.utils import generate_fly_io_file_obj
 
 # Set up logging
@@ -107,13 +108,13 @@ def deploy_fly_io():
     # set secrets
     for secret in app_secrets:
         # get the secret
-        secret_value = get_fly_app_secret(
-            app_name=app_name,
-            secret_name=secret["name"]
-        )
+        secrets_output = get_fly_app_secrets()
+
+        # regex to find secret
+        secret_regex = re.compile(f"{secret['name']}=(.*)")
 
         # if secret does not exist, set it
-        if not secret_value or secret_value == None:
+        if not secret_regex.search(secrets_output):
             set_fly_app_secret(
                 app_name=app_name,
                 secret_name=secret["name"],
