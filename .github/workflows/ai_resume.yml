@@ -109,6 +109,6 @@ jobs:
             -backend-config="storage_account_name=${{ env.TF_AZURE_RM_STORAGE_ACCOUNT_NAME }}" \
             -backend-config="container_name=${{ env.TF_AZURE_RM_CONTAINER_NAME }}" \
             -backend-config="key=${{ env.TF_AZURE_RM_KEY }}" \
-            -var "github_oidc_request_token=$ACTIONS_ID_TOKEN_REQUEST_TOKEN"
+            -var "github_oidc_request_token=$ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
             -var "github_oidc_request_url=$ACTIONS_ID_TOKEN_REQUEST_URL"
         working-directory: "${{ env.repo_path }}/infra"
