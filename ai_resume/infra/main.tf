@@ -1,7 +1,11 @@
 terraform {
   required_version = "1.9.8"
 
-  backend "azurerm" {}
+  backend "azurerm" {
+    resource_group_name  = "cloud-infra-projects-tf-state"
+    storage_account_name = "cloudinfraprojstfstate"
+    container_name       = "tfstate"
+  }
 
   required_providers {
     azurerm = {
