@@ -26,6 +26,7 @@ No modules.
 | [azurerm_cdn_profile.cdn_profile](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/cdn_profile) | resource |
 | [azurerm_resource_group.rg](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/resource_group) | resource |
 | [azurerm_storage_account.storage_account](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/storage_account) | resource |
+| [azurerm_storage_queue_properties.storage_account_queue_properties](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/storage_queue_properties) | resource |
 
 ## Inputs
 
