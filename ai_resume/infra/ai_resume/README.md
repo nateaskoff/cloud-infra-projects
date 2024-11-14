@@ -22,7 +22,10 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [azurerm_cdn_endpoint.cdn_endpoint](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/cdn_endpoint) | resource |
+| [azurerm_cdn_profile.cdn_profile](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/cdn_profile) | resource |
 | [azurerm_resource_group.rg](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/resource_group) | resource |
+| [azurerm_storage_account.storage_account](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/storage_account) | resource |
 
 ## Inputs
 
