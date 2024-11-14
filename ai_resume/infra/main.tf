@@ -5,6 +5,7 @@ terraform {
     resource_group_name  = "cloud-infra-projects-tf-state"
     storage_account_name = "cloudinfraprojstfstate"
     container_name       = "tfstate"
+    use_oidc             = true
   }
 
   required_providers {
