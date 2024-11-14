@@ -14,18 +14,15 @@ resource "azurerm_key_vault" "key_vault" {
     object_id = data.azurerm_client_config.current.object_id
 
     key_permissions = [
-      "get",
-      "list"
+      "Backup", "Delete", "DeleteSAS", "Get", "GetSAS", "List", "ListSAS", "Purge", "Recover", "RegenerateKey", "Restore", "Set", "SetSAS", "Update"
     ]
 
     secret_permissions = [
-      "get",
-      "list"
+      "Backup", "Delete", "DeleteSAS", "Get", "GetSAS", "List", "ListSAS", "Purge", "Recover", "RegenerateKey", "Restore", "Set", "SetSAS", "Update"
     ]
 
     storage_permissions = [
-      "get",
-      "list"
+      "Backup", "Delete", "DeleteSAS", "Get", "GetSAS", "List", "ListSAS", "Purge", "Recover", "RegenerateKey", "Restore", "Set", "SetSAS", "Update"
     ]
   }
 
