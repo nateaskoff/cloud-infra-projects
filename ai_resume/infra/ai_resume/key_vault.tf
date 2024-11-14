@@ -93,7 +93,7 @@ resource "azurerm_private_endpoint" "key_vault_private_endpoint" {
   name                = "${var.env}-kv-ai-resume-pe"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  subnet_id           = azurerm_subnet.private_subnet.id
+  subnet_id           = azurerm_subnet.subnet.id
 
   private_service_connection {
     name                           = "${var.env}-kv-ai-resume-psc"
