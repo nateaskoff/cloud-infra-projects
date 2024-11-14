@@ -85,7 +85,7 @@ jobs:
       TF_VAR_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       TF_VAR_client_id: ${{ secrets.AZURE_CLIENT_ID }}
       TF_VAR_resource_group_name: "cloud-infra-projects-tf-state"
-      TF_VAR_storage_account_name: "cloud-infra-projects-tf-state"
+      TF_VAR_storage_account_name: "cloudinfraprojstfstate"
       TF_VAR_container_name: "tfstate"
       TF_VAR_state_key: "dev/ai_resume/terraform.tfstate"
     steps:
