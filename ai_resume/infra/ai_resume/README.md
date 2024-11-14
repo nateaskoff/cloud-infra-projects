@@ -27,6 +27,8 @@ No modules.
 | [azurerm_key_vault.key_vault](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/key_vault) | resource |
 | [azurerm_key_vault_access_policy.key_vault_access_policy](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/key_vault_access_policy) | resource |
 | [azurerm_key_vault_key.key_vault_key](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/key_vault_key) | resource |
+| [azurerm_private_endpoint.key_vault_private_endpoint](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/private_endpoint) | resource |
+| [azurerm_private_endpoint.storage_account_private_endpoint](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/private_endpoint) | resource |
 | [azurerm_resource_group.rg](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/resource_group) | resource |
 | [azurerm_storage_account.storage_account](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/storage_account) | resource |
 | [azurerm_storage_account_customer_managed_key.storage_account_cmk](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/storage_account_customer_managed_key) | resource |
