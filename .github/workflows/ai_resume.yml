@@ -94,11 +94,11 @@ jobs:
         with:
           terraform_version: "1.9.8"
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -backend-config="key=${{ env.TF_AZURE_RM_KEY }}"
         working-directory: "${{ env.repo_path }}/infra"
       - name: Terraform Validate
         run: terraform validate
         working-directory: "${{ env.repo_path }}/infra"
       - name: Terraform Plan
-        run: terraform plan -backend-config="key=${{ env.TF_AZURE_RM_KEY }}" -var "github_oidc_request_token=$ACTIONS_ID_TOKEN_REQUEST_TOKEN" -var "github_oidc_request_url=$ACTIONS_ID_TOKEN_REQUEST_URL"
+        run: terraform plan -var "github_oidc_request_token=$ACTIONS_ID_TOKEN_REQUEST_TOKEN" -var "github_oidc_request_url=$ACTIONS_ID_TOKEN_REQUEST_URL"
         working-directory: "${{ env.repo_path }}/infra"
