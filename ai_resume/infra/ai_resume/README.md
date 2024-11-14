@@ -24,9 +24,13 @@ No modules.
 |------|------|
 | [azurerm_cdn_endpoint.cdn_endpoint](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/cdn_endpoint) | resource |
 | [azurerm_cdn_profile.cdn_profile](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/cdn_profile) | resource |
+| [azurerm_key_vault.key_vault](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/key_vault) | resource |
+| [azurerm_key_vault_access_policy.key_vault_access_policy](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/key_vault_access_policy) | resource |
+| [azurerm_key_vault_key.key_vault_key](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/key_vault_key) | resource |
 | [azurerm_resource_group.rg](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/resource_group) | resource |
 | [azurerm_storage_account.storage_account](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/storage_account) | resource |
-| [azurerm_storage_queue_properties.storage_account_queue_properties](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/storage_queue_properties) | resource |
+| [azurerm_storage_account_customer_managed_key.storage_account_cmk](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/storage_account_customer_managed_key) | resource |
+| [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/data-sources/client_config) | data source |
 
 ## Inputs
 

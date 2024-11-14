@@ -31,3 +31,9 @@ resource "azurerm_storage_account" "storage_account" {
     }
   }
 }
+
+resource "azurerm_storage_account_customer_managed_key" "storage_account_cmk" {
+  storage_account_id = azurerm_storage_account.storage_account.id
+  key_vault_id       = azurerm_key_vault_key.key_vault_key.id
+  key_name           = azurerm_key_vault_key.key_vault_key.name
+}
