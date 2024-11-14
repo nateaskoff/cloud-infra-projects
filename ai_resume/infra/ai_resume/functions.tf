@@ -20,7 +20,5 @@ resource "azurerm_linux_function_app" "open_ai_function_app" {
   https_only                    = true
   public_network_access_enabled = false
 
-  site_config {
-    linux_fx_version = "PYTHON|3.12"
-  }
+  site_config {}
 }
