@@ -1,11 +1,12 @@
 resource "azurerm_service_plan" "open_ai_svc_plan" {
+  #checkov:skip=CKV_AZURE_211:hobby project, no need for paid plan
   #checkov:skip=CKV_AZURE_212:hobby project, no need for minimum instance failover
   #checkov:skip=CKV_AZURE_225:hobby project, zone redundancy not needed
   name                = "${var.env}-sp-openai"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   os_type             = "Linux"
-  sku_name            = "P1v2"
+  sku_name            = "F1"
 }
 
 resource "azurerm_linux_function_app" "open_ai_function_app" {
