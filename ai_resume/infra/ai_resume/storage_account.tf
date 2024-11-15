@@ -1,4 +1,5 @@
 resource "azurerm_storage_account" "storage_account" {
+  #checkov:skip=CKV_AZURE_33:no private endpoint for hobby project
   #checkov:skip=CKV_AZURE_206:no replication needed for hobby projects
   name                            = "${var.env}airesumestac"
   resource_group_name             = azurerm_resource_group.rg.name

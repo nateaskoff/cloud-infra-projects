@@ -1,4 +1,5 @@
 resource "azurerm_key_vault" "key_vault" {
+  #checkov:skip=CKV_AZURE_32:no private endpoint for hobby project
   name                        = "${var.env}-kv-ai-resume"
   location                    = azurerm_resource_group.rg.location
   resource_group_name         = azurerm_resource_group.rg.name
