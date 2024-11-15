@@ -51,17 +51,3 @@ resource "azurerm_storage_account_customer_managed_key" "storage_account_cmk" {
   key_vault_id       = azurerm_key_vault_key.key_vault_key.id
   key_name           = azurerm_key_vault_key.key_vault_key.name
 }
-
-resource "azurerm_private_endpoint" "storage_account_private_endpoint" {
-  name                = "${var.env}-storage-account-private-endpoint"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  subnet_id           = azurerm_subnet.subnet.id
-
-  private_service_connection {
-    name                           = "${var.env}-storage-account-private-endpoint-connection"
-    private_connection_resource_id = azurerm_storage_account.storage_account.id
-    subresource_names              = ["blob"]
-    is_manual_connection           = false
-  }
-}

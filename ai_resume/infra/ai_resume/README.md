@@ -28,16 +28,10 @@ No modules.
 | [azurerm_key_vault_access_policy.key_vault_access_policy](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/key_vault_access_policy) | resource |
 | [azurerm_key_vault_key.key_vault_key](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/key_vault_key) | resource |
 | [azurerm_linux_function_app.open_ai_function_app](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/linux_function_app) | resource |
-| [azurerm_network_security_group.vnet_sec_group](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/network_security_group) | resource |
-| [azurerm_private_endpoint.key_vault_private_endpoint](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/private_endpoint) | resource |
-| [azurerm_private_endpoint.storage_account_private_endpoint](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/private_endpoint) | resource |
 | [azurerm_resource_group.rg](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/resource_group) | resource |
 | [azurerm_service_plan.open_ai_svc_plan](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/service_plan) | resource |
 | [azurerm_storage_account.storage_account](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/storage_account) | resource |
 | [azurerm_storage_account_customer_managed_key.storage_account_cmk](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/storage_account_customer_managed_key) | resource |
-| [azurerm_subnet.subnet](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/subnet) | resource |
-| [azurerm_subnet_network_security_group_association.subnet_nsg_association](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/subnet_network_security_group_association) | resource |
-| [azurerm_virtual_network.vnet](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/resources/virtual_network) | resource |
 | [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/4.9.0/docs/data-sources/client_config) | data source |
 
 ## Inputs
